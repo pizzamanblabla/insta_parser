@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="PostgreSQL - insta_parser@localhost" uuid="3fd6ef63-6349-4c54-9485-d08d89158ea6">
+      <database-info product="PostgreSQL" version="9.6.1" jdbc-version="4.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.4 JDBC4 (build 1201)">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>Eugene</user-name>
+      <introspection-scope>insta_parser:public,pg_catalog,eugene</introspection-scope>
+      <resolve-scope>insta_parser:public,eugene</resolve-scope>
+    </data-source>
+  </component>
+</project>
