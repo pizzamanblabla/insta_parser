@@ -8,9 +8,10 @@ services:
             - { name: console.command }
 
     insta_parser.command.parse:
-        class: InstaParserBundle\Command\Mention\Parse
+        class: InstaParserBundle\Command\Mention\Update
         arguments:
-            - '@insta_parser.operation.subscriber.add.transactional'
+            - '@insta_parser.operation.mention.parse.transactional'
+            - '@insta_parser.repository_factory'
             - '@logger'
         tags:
                 - { name: console.command }

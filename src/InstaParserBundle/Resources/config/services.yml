@@ -13,14 +13,14 @@ services:
             - '@insta_parser.repository_factory'
             - '@logger'
 
-    insta_parser.operation.mention.parse.transactional:
+    insta_parser.operation.mention.update.transactional:
         class: InstaParserBundle\Internal\Service\Transactional
         arguments:
-            - '@insta_parser.operation.mention.parse.service'
+            - '@insta_parser.operation.mention.update.service'
             - '@doctrine.orm.entity_manager'
             - '@logger'
 
-    insta_parser.operation.mention.parse.service:
+    insta_parser.operation.mention.update.service:
         class: InstaParserBundle\Operation\Statistics\Update\Service\Service
         arguments:
             - '@doctrine.orm.entity_manager'
