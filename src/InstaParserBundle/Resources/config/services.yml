@@ -1,0 +1,34 @@
+services:
+    insta_parser.operation.subscriber.add.transactional:
+        class: InstaParserBundle\Internal\Service\Transactional
+        arguments:
+            - '@insta_parser.operation.subscriber.add.service'
+            - '@doctrine.orm.entity_manager'
+            - '@logger'
+
+    insta_parser.operation.subscriber.add.service:
+        class: InstaParserBundle\Operation\Subscriber\Add\Service\Service
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+
+    insta_parser.operation.mention.parse.transactional:
+        class: InstaParserBundle\Internal\Service\Transactional
+        arguments:
+            - '@insta_parser.operation.mention.parse.service'
+            - '@doctrine.orm.entity_manager'
+            - '@logger'
+
+    insta_parser.operation.mention.parse.service:
+        class: InstaParserBundle\Operation\Statistics\Update\Service\Service
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+
+    #Repository Factory
+    insta_parser.repository_factory:
+        class: InstaParserBundle\Entity\Repository\Factory
+        arguments:
+            - '@doctrine.orm.entity_manager'

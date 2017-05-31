@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Internal\Enum;
+namespace InstaParserBundle\Interaction\Enum;
 
 class UpdateStatus extends Enumeration
 {

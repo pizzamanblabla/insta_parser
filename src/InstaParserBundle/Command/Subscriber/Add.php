@@ -4,9 +4,9 @@ namespace InstaParserBundle\Command\Subscriber;
 
 use InstaParserBundle\Command\BaseOperationCommand;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
+use InstaParserBundle\Operation\Subscriber\Add\Dto\Request\Request;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 
 final class Add extends BaseOperationCommand
 {
@@ -16,10 +16,9 @@ final class Add extends BaseOperationCommand
     protected function configure()
     {
         $this
-            ->setName('parser:parse')
+            ->setName('subscriber:add')
             ->setDescription('Updating')
-            ->addArgument('key', InputArgument::REQUIRED, 'Which subscriber needs to be updated?')
-            ->addOption('name', 'n', InputOption::VALUE_NONE)
+            ->addArgument('name', InputArgument::REQUIRED, 'Name of subscriber')
         ;
     }
 
@@ -28,6 +27,6 @@ final class Add extends BaseOperationCommand
      */
     protected function createRequest(InputInterface $input): InternalRequestInterface
     {
-        // TODO: Implement createRequest() method.
+        return (new Request())->setNames([$input->getArgument('name')]);
     }
 }

@@ -2,10 +2,12 @@
 
 namespace InstaParserBundle\Operation\Subscriber\Add\Service;
 
+use DateTime;
 use InstaParserBundle\Entity\Subscriber;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Interaction\Dto\Response\EmptyInnerSuccessfulResponse;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
+use InstaParserBundle\Interaction\Enum\UpdateStatus;
 use InstaParserBundle\Internal\Service\BaseEntityService;
 use InstaParserBundle\Operation\Subscriber\Add\Dto\Request\Request;
 
@@ -19,7 +21,9 @@ final class Service extends BaseEntityService
     {
         array_map(
             function(string $name) {
-                $this->createSubscriber($name);
+                if (is_null($this->repositoryFactory->subscriber()->findOneByName($name))) {
+                    $this->createSubscriber($name);
+                }
             },
             $request->getNames()
         );
@@ -37,6 +41,9 @@ final class Service extends BaseEntityService
             (new Subscriber())
                 ->setName($name)
                 ->setLink($this->buildLink($name))
+                ->setIsOnPlatform(false)
+                ->setUpdatedAt(new DateTime())
+                ->setStatus(UpdateStatus::ready()->getValue())
         );
     }
 

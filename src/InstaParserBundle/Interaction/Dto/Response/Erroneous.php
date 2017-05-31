@@ -2,7 +2,7 @@
 
 namespace InstaParserBundle\Interaction\Dto\Response;
 
-use InstaParserBundle\Internal\Enum\ResponseType;
+use InstaParserBundle\Interaction\Enum\ResponseType;
 
 trait Erroneous
 {

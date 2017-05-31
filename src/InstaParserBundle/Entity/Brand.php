@@ -2,6 +2,8 @@
 
 namespace InstaParserBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Table(name="brand")
  * @ORM\Entity(repositoryClass="InstaParserBundle\Entity\Repository\Brand")

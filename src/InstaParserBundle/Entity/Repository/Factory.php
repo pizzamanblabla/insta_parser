@@ -7,7 +7,7 @@ use InstaParserBundle\Entity\Brand as BrandEntity;
 use InstaParserBundle\Entity\Mention as MentionEntity;
 use InstaParserBundle\Entity\Subscriber as SubscriberEntity;
 
-class Factory implements FactoryInterface
+final class Factory implements FactoryInterface
 {
     /**
      * @var EntityManager
@@ -27,7 +27,7 @@ class Factory implements FactoryInterface
      */
     public function brand(): Brand
     {
-        return new Brand($this->entityManager, BrandEntity::class);
+        return $this->entityManager->getRepository(BrandEntity::class);
     }
 
     /**
@@ -35,7 +35,7 @@ class Factory implements FactoryInterface
      */
     public function mention(): Mention
     {
-        return new Mention($this->entityManager, MentionEntity::class);
+        return $this->entityManager->getRepository(MentionEntity::class);
     }
 
     /**
@@ -43,6 +43,6 @@ class Factory implements FactoryInterface
      */
     public function subscriber(): Subscriber
     {
-        return new Subscriber($this->entityManager, SubscriberEntity::class);
+        return $this->entityManager->getRepository(SubscriberEntity::class);
     }
 }

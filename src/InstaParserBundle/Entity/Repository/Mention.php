@@ -4,7 +4,7 @@ namespace InstaParserBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class Mention extends EntityRepository
+final class Mention extends EntityRepository
 {
 
 }

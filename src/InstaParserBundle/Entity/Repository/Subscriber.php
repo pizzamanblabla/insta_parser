@@ -3,8 +3,12 @@
 namespace InstaParserBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use InstaParserBundle\Entity;
 
-class Subscriber extends EntityRepository
+/**
+ * @method findOneByName(string $name)
+ */
+final class Subscriber extends EntityRepository
 {
 
 }

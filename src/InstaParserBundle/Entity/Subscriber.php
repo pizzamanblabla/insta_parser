@@ -3,6 +3,7 @@
 namespace InstaParserBundle\Entity;
 
 use DateTime;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="subscriber")

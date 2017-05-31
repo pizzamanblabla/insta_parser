@@ -4,7 +4,7 @@ namespace InstaParserBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class Brand extends EntityRepository
+final class Brand extends EntityRepository
 {
 
 }

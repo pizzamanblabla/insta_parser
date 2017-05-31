@@ -1,13 +1,14 @@
 <?php
 
-namespace InstaParserBundle\Command;
+namespace InstaParserBundle\Command\Mention;
 
+use InstaParserBundle\Command\BaseOperationCommand;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
-final class Update extends BaseOperationCommand
+final class Parse extends BaseOperationCommand
 {
     /**
      * {@inheritdoc}
