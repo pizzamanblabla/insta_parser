@@ -31,7 +31,7 @@ class JMSObjectBuilder implements ObjectBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build($object, $objectFormType, array $data)
+    public function build($object, array $data)
     {
         try {
             return $this->serializer->fromArray($data, get_class($object));
