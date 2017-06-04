@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'PlayfairDisplay';
+  src: url('fonts/PlayfairDisplay-Regular.ttf') format('ttf');
+}
+
+@mixin playfair {
+  font-family: 'PlayfairDisplay', Helvetica, Arial, sans-serif;
+}

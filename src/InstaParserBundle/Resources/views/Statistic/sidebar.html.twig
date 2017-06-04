@@ -1,0 +1,19 @@
+<div class="sidebar">
+    <div class="top">
+        <p>Top Блоги</p>
+        <ul>
+            {% for topBlogger in topBloggers %}
+                <li><a href="{{ topBlogger.subscriber.link }}">@{{ topBlogger.subscriber.name }}</a> - {{ topBlogger.brandCount }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="top">
+        <p>Top Бренды</p>
+        <ul>
+            {% for topBrand in topBrands %}
+                <li><a href="https://www.instagram.com/{{ topBrand.brand.name }}">{{ topBrand.brand.name }}</a> - {{ topBrand.subscriberCount }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

@@ -10,6 +10,7 @@ use InstaParserBundle\Internal\Service\ServiceInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Throwable;
 
 final class Service implements ServiceInterface
 {
@@ -37,7 +38,7 @@ final class Service implements ServiceInterface
     {
         try {
             return $this->remoteCall->call($request);
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return new EmptyInnerErroneousResponse($e);
         }
     }

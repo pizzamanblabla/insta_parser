@@ -33,4 +33,23 @@ final class Mention extends EntityRepository
 
         return $queryBuilder->getQuery()->getResult();
     }
+
+    /**
+     * @param Entity\Brand $brand
+     * @param DateTime $date
+     * @return Entity\Mention[]
+     */
+    public function findAllByBrandAndTimeSpan(Entity\Brand $brand, DateTime $date)
+    {
+        $queryBuilder = $this->createQueryBuilder('m');
+
+        $queryBuilder
+            ->where('m.brand=:brand')
+            ->andWhere('m.date > :date')
+            ->setParameter('brand', $brand)
+            ->setParameter('date', $date)
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

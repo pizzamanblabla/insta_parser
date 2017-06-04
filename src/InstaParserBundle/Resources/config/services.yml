@@ -1,4 +1,11 @@
 services:
+    insta_parser.operation.statistic.get.service:
+        class: InstaParserBundle\Operation\Statistics\Get\Service\Service
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+
     insta_parser.operation.subscriber.add.transactional:
         class: InstaParserBundle\Internal\Service\Transactional
         arguments:

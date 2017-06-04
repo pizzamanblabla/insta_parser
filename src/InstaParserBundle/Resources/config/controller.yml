@@ -1,0 +1,6 @@
+services:
+    insta_parser.controller.statistic.metions:
+        class: InstaParserBundle\Controller\StatisticController
+        arguments:
+            - '@service_container'
+            - '@insta_parser.operation.statistic.get.service'

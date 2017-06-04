@@ -1,0 +1,7 @@
+@mixin box-sizing($param) {
+  box-sizing: $param;
+  -webkit-box-sizing: $param;
+  -ms-box-sizing: $param;
+  -moz-box-sizing: $param;
+  -o-box-sizing: $param;
+}

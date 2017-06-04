@@ -1,0 +1,5 @@
+@mixin background-clip($param) {
+  -webkit-background-clip: $param;
+  -moz-background-clip: $param;
+  background-clip: $param;
+}

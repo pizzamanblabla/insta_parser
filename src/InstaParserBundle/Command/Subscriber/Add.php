@@ -7,6 +7,7 @@ use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Operation\Subscriber\Add\Dto\Request\Request;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 final class Add extends BaseOperationCommand
 {
@@ -19,6 +20,7 @@ final class Add extends BaseOperationCommand
             ->setName('subscriber:add')
             ->setDescription('Updating')
             ->addArgument('name', InputArgument::REQUIRED, 'Name of subscriber')
+            ->addOption('platform', 'p', InputOption::VALUE_NONE)
         ;
     }
 
@@ -27,6 +29,10 @@ final class Add extends BaseOperationCommand
      */
     protected function createRequest(InputInterface $input): InternalRequestInterface
     {
-        return (new Request())->setNames([$input->getArgument('name')]);
+        return
+            (new Request())
+                ->setNames([$input->getArgument('name')])
+                ->setOnPlatform($input->getOption('platform'))
+            ;
     }
 }

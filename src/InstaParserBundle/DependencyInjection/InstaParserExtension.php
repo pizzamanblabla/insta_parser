@@ -31,6 +31,7 @@ class InstaParserExtension extends Extension
     {
         return [
             'command.yml',
+            'controller.yml',
             'services.yml',
         ];
     }

@@ -1,0 +1,16 @@
+@mixin centerElement($width) {
+  margin: auto;
+  display: block;
+  max-width: 250px;
+}
+
+.center-fixed {
+  position: fixed;
+  top: 40%;
+  z-index: 101;
+  width: 100%;
+}
+
+.hidden {
+  display:none;
+}

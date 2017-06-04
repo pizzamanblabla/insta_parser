@@ -1,0 +1,12 @@
+.search-button {
+  padding: 10px 60px;
+  margin: 10px;
+  background-color: $blue;
+  color: $white;
+  font-size: 15px;
+  border: none;
+  position: relative;
+  bottom: -100px;
+  left: 60px;
+  @include border-radius(3px)
+}

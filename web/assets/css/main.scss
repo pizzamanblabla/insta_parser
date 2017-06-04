@@ -1,0 +1,22 @@
+/* variables */
+@import "common/vars/path";
+@import "common/vars/color";
+
+/* mixins */
+@import "common/mixins/border-radius";
+@import "common/mixins/box-shadow";
+@import "common/mixins/box-sizing";
+@import "common/mixins/background-clip";
+@import "common/mixins/inline-block";
+@import "common/mixins/fonts";
+
+/* сommon styles */
+@import "common/base_elements";
+@import "common/buttons";
+@import "common/select";
+@import "common/range";
+@import "common/footer";
+@import "common/header";
+@import "common/position";
+
+@import "statistic/mention";

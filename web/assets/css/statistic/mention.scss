@@ -1,0 +1,33 @@
+.content {
+  border-top: 1px solid $black;
+  padding-top: 50px;
+  width: 100%;
+  .mentions {
+    background-color: $white;
+    border: 1px solid $neutral-grey;
+    width: 65%;
+    min-width: 800px;
+    margin: auto;
+    @include border-radius(3px);
+    .mention-table
+    {
+      width: 100%;
+      text-align: center;
+      td {
+        padding: 10px 0;
+        border: 1px solid $neutral-grey;
+      };
+    };
+  };
+  .sidebar {
+    float: left;
+    width: 15%;
+    padding: 10px;
+    background-color: $white;
+    border: 1px solid $neutral-grey;
+    @include border-radius(3px);
+    .top {
+      margin: 10px 0;
+    }
+  }
+}

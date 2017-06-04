@@ -20,9 +20,9 @@ final class Service extends BaseEntityService
     public function behave(InternalRequestInterface $request): InternalResponseInterface
     {
         array_map(
-            function(string $name) {
+            function(string $name) use ($request) {
                 if (is_null($this->repositoryFactory->subscriber()->findOneByName($name))) {
-                    $this->createSubscriber($name);
+                    $this->createSubscriber($name, $request->isOnPlatform());
                 }
             },
             $request->getNames()
@@ -33,15 +33,16 @@ final class Service extends BaseEntityService
 
     /**
      * @param string $name
+     * @param bool $isOnPlatform
      * @return void
      */
-    private function createSubscriber(string $name)
+    private function createSubscriber(string $name, bool $isOnPlatform)
     {
         $this->entityManager->persist(
             (new Subscriber())
                 ->setName($name)
                 ->setLink($this->buildLink($name))
-                ->setIsOnPlatform(false)
+                ->setIsOnPlatform($isOnPlatform)
                 ->setUpdatedAt(new DateTime())
                 ->setStatus(UpdateStatus::ready()->getValue())
         );

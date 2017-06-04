@@ -1,3 +1,4 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+controller.statistic:
+    path: '/'
+    defaults: { _controller: insta_parser.controller.statistic.metions:getMentionsAction, security: false }
+    methods: [GET]

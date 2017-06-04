@@ -1,0 +1,5 @@
+@mixin box-shadow($param) {
+  --moz-box-shadow: $param;
+  -webkit-box-shadow: $param;
+  box-shadow: $param;
+}

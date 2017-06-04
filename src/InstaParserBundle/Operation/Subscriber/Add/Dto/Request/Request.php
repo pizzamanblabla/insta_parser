@@ -12,6 +12,11 @@ class Request implements InternalRequestInterface
     private $names;
 
     /**
+     * @var bool
+     */
+    private $onPlatform = false;
+
+    /**
      * @return string[]
      */
     public function getNames()
@@ -26,6 +31,24 @@ class Request implements InternalRequestInterface
     public function setNames($names)
     {
         $this->names = $names;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isOnPlatform()
+    {
+        return $this->onPlatform;
+    }
+
+    /**
+     * @param boolean $onPlatform
+     * @return Request
+     */
+    public function setOnPlatform($onPlatform)
+    {
+        $this->onPlatform = $onPlatform;
         return $this;
     }
 }

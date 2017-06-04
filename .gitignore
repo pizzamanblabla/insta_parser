@@ -15,3 +15,16 @@
 /vendor/
 /web/bundles/
 /.idea/
+/web/assets/vendor
+/bower_components/
+/node_modules/
+
+# Composer PHAR
+/composer.phar
+
+# assets
+/web/public/.sass-cache/
+/web/public/dist/
+/web/assets/node_modules
+/web/public/styles.css
+/web/public/bundle-app.js

@@ -1,0 +1,5 @@
+@mixin inline-block($align) {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: $align;
+}
