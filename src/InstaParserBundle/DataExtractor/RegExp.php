@@ -1,8 +1,9 @@
 <?php
 
-namespace InstaParserBundle\DataExtractor\String;
+namespace InstaParserBundle\DataExtractor;
 
 use InstaParserBundle\DataExtractor\Exception\WrongInputFormatException;
+use InstaParserBundle\Internal\Sanitizer\SanitizerInterface;
 use InstaParserBundle\PayloadModifier\PayloadModifierInterface;
 
 final class RegExp implements DataExtractorInterface
@@ -13,17 +14,27 @@ final class RegExp implements DataExtractorInterface
     private $payloadModifier;
 
     /**
+     * @var SanitizerInterface
+     */
+    private $sanitizer;
+
+    /**
      * @var string
      */
     private $regExp;
 
     /**
      * @param PayloadModifierInterface $payloadModifier
+     * @param SanitizerInterface $sanitizer
      * @param string $regExp
      */
-    public function __construct(PayloadModifierInterface $payloadModifier, string $regExp)
-    {
+    public function __construct(
+        PayloadModifierInterface $payloadModifier,
+        SanitizerInterface $sanitizer,
+        string $regExp
+    ) {
         $this->payloadModifier = $payloadModifier;
+        $this->sanitizer = $sanitizer;
         $this->regExp = $regExp;
     }
 
@@ -38,6 +49,6 @@ final class RegExp implements DataExtractorInterface
 
         $matched = preg_match($this->regExp, $extractable, $match) ? $match[0] : '';
 
-        return $this->payloadModifier->modify($matched);
+        return $this->payloadModifier->modify($this->sanitizer->sanitize($matched));
     }
 }

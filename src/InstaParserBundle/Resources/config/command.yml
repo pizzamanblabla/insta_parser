@@ -10,7 +10,7 @@ services:
     insta_parser.command.parse:
         class: InstaParserBundle\Command\Mention\Update
         arguments:
-            - '@insta_parser.operation.mention.parse.transactional'
+            - '@insta_parser.operation.statistic.update.lock_subscribers'
             - '@insta_parser.repository_factory'
             - '@logger'
         tags:

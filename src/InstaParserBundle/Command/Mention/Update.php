@@ -6,7 +6,7 @@ use InstaParserBundle\Command\BaseOperationCommand;
 use InstaParserBundle\Entity\Repository\FactoryInterface;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Internal\Service\ServiceInterface;
-use InstaParserBundle\Operation\Statistics\Update\Dto\Request\Request;
+use InstaParserBundle\Operation\Statistics\Update\Collection\Dto\Request\Request;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 

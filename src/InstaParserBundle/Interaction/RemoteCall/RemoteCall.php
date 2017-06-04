@@ -1,14 +1,14 @@
 <?php
 
-namespace ParserBundle\Interaction\Protocol;
+namespace InstaParserBundle\Interaction\RemoteCall;
 
 use GuzzleHttp\ClientInterface;
-use InstaParserBundle\DataExtractor\String\DataExtractorInterface;
+use InstaParserBundle\DataExtractor\DataExtractorInterface;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Interaction\RequestAssembler\RequestAssemblerInterface;
 use InstaParserBundle\Interaction\Response\ResponseFactoryInterface;
-use InstaParserBundle\Internal\ObjectBuilder\InvalidObjectException;
+use InstaParserBundle\Internal\ObjectBuilder\Exception\InvalidObjectException;
 use InstaParserBundle\Internal\ObjectBuilder\ObjectBuilderInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;

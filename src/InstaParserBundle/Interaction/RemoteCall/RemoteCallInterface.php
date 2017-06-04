@@ -1,6 +1,6 @@
 <?php
 
-namespace ParserBundle\Interaction\Protocol;
+namespace InstaParserBundle\Interaction\RemoteCall;
 
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 

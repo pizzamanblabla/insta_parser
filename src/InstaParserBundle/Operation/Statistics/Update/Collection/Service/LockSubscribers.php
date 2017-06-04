@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistics\Update\Service;
+namespace InstaParserBundle\Operation\Statistics\Update\Collection\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use InstaParserBundle\Entity\Repository\FactoryInterface;
@@ -10,7 +10,7 @@ use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Interaction\Enum\UpdateStatus;
 use InstaParserBundle\Internal\Service\BaseEntityService;
 use InstaParserBundle\Internal\Service\ServiceInterface;
-use InstaParserBundle\Operation\Statistics\Update\Dto\Request\Request;
+use InstaParserBundle\Operation\Statistics\Update\Collection\Dto\Request\Request;
 use Psr\Log\LoggerInterface;
 
 final class LockSubscribers extends BaseEntityService
@@ -47,9 +47,6 @@ final class LockSubscribers extends BaseEntityService
         $this->setSubscriberStatus($request->getSubscribers(), UpdateStatus::inProgress());
 
         $response = $this->service->behave($request);
-
-        $this->logger->info('Releasing lock on subscribers');
-        $this->setSubscriberStatus($request->getSubscribers(), UpdateStatus::ready());
 
         return $response;
     }

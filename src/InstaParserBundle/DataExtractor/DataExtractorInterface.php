@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\DataExtractor\String;
+namespace InstaParserBundle\DataExtractor;
 
 interface DataExtractorInterface
 {

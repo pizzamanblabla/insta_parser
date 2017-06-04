@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Internal\ObjectBuilder;
+namespace InstaParserBundle\Internal\ObjectBuilder\Exception;
 
 use Exception;
 

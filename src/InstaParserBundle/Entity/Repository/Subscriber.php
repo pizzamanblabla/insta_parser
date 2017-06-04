@@ -20,8 +20,9 @@ final class Subscriber extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('s');
 
         $queryBuilder
-            ->where('s.status=:status')
-            ->setParameter('status', UpdateStatus::READY)
+            ->where('s.status!=:status')
+            ->setParameter('status', UpdateStatus::IN_PROGRESS)
+            ->orderBy('s.updated_at', 'DESC')
             ->setMaxResults($limit)
         ;
 

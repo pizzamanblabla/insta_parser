@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\DataExtractor\String;
+namespace InstaParserBundle\DataExtractor;
 
 final class SearchNodes implements DataExtractorInterface
 {
@@ -43,7 +43,7 @@ final class SearchNodes implements DataExtractorInterface
         $found = [];
 
         foreach ($data as $key => $value) {
-            if (in_array($key, $this->targetKeys)) {
+            if (is_string($key) && in_array($key, $this->targetKeys)) {
                 $found[$key] = $value;
             } elseif (is_array($value)) {
                 $found = array_merge($found, $this->search($value));

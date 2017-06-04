@@ -8,6 +8,8 @@ class UpdateStatus extends Enumeration
 
     const IN_PROGRESS = 'in_progress';
 
+    const FAILED = 'failed';
+
     /**
      * @return UpdateStatus
      */
@@ -25,6 +27,14 @@ class UpdateStatus extends Enumeration
     }
 
     /**
+     * @return UpdateStatus
+     */
+    public static function failed()
+    {
+        return new self(static::FAILED);
+    }
+
+    /**
      * @return bool
      */
     public function isReady()
@@ -38,5 +48,13 @@ class UpdateStatus extends Enumeration
     public function isInProgress()
     {
         return $this->value == static::IN_PROGRESS;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFailed()
+    {
+        return $this->value == static::FAILED;
     }
 }

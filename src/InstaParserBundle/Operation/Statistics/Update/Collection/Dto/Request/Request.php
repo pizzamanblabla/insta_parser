@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistics\Update\Dto\Request;
+namespace InstaParserBundle\Operation\Statistics\Update\Collection\Dto\Request;
 
 use InstaParserBundle\Entity\Subscriber;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;

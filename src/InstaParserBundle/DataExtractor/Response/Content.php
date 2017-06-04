@@ -3,7 +3,7 @@
 namespace InstaParserBundle\DataExtractor\Response;
 
 use InstaParserBundle\DataExtractor\Exception\WrongInputFormatException;
-use InstaParserBundle\DataExtractor\String\DataExtractorInterface;
+use InstaParserBundle\DataExtractor\DataExtractorInterface;
 use Psr\Http\Message\ResponseInterface;
 
 final class Content implements DataExtractorInterface
