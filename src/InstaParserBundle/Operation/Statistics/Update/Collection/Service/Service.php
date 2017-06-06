@@ -110,9 +110,9 @@ final class Service extends BaseEntityService
      */
     private function findBrands(string $caption): array
     {
-        preg_match('/@[^\s.()!\'"\/\\\]+/ui', $caption, $match);
+        $result = preg_match_all('/@[^\s.()!\'"\/\\\]+/ui', $caption, $match);
 
-        return $match;
+        return $result ? $match[0] : [];
     }
 
     /**
@@ -149,6 +149,7 @@ final class Service extends BaseEntityService
             ;
 
             $this->entityManager->persist($mention);
+            $this->entityManager->flush();
         }
     }
 }
