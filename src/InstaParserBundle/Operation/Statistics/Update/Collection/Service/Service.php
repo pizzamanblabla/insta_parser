@@ -156,6 +156,7 @@ final class Service extends BaseEntityService
             ;
 
             $this->entityManager->persist($mention);
+            $this->entityManager->flush();
         }
     }
 }
