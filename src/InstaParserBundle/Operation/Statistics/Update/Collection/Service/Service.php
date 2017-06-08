@@ -87,10 +87,11 @@ final class Service extends BaseEntityService
      */
     private function updateMentions(InternalResponseInterface $response, Subscriber $subscriber)
     {
+        $brandPool = [];
+
         foreach ($response->getPublications() as $publication) {
             if (!empty($publication->getCaption())) {
                 $brands = $this->findBrands($publication->getCaption());
-                $brandPool = [];
 
                 foreach ($brands as $brandName) {
                     $brand = $this->getOrCreateBrand($brandName);
