@@ -23,7 +23,7 @@ final class Subscriber extends EntityRepository
         $queryBuilder
             ->where('s.status!=:status')
             ->setParameter('status', UpdateStatus::IN_PROGRESS)
-            ->orderBy('s.updatedAt', 'DESC')
+            ->orderBy('s.updatedAt', 'ASC')
             ->setMaxResults($limit)
         ;
 

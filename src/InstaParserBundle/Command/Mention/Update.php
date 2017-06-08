@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 
 final class Update extends BaseOperationCommand
 {
-    const UPDATE_LIMIT = 1000;
+    const UPDATE_LIMIT = 500;
 
     /**
      * @var FactoryInterface

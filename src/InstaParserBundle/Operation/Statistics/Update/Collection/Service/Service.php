@@ -90,15 +90,20 @@ final class Service extends BaseEntityService
         foreach ($response->getPublications() as $publication) {
             if (!empty($publication->getCaption())) {
                 $brands = $this->findBrands($publication->getCaption());
+                $brandPool = [];
 
                 foreach ($brands as $brandName) {
                     $brand = $this->getOrCreateBrand($brandName);
 
-                    $this->updateMention(
-                        (new DateTime())->modify('@' . $publication->getTimestamp()),
-                        $brand,
-                        $subscriber
-                    );
+                    if (!in_array($brandName, $brandPool)) {
+                        $brandPool[] = $brandName;
+
+                        $this->updateMention(
+                            (new DateTime())->modify('@' . $publication->getTimestamp()),
+                            $brand,
+                            $subscriber
+                        );
+                    }
                 }
             }
         }
@@ -110,7 +115,7 @@ final class Service extends BaseEntityService
      */
     private function findBrands(string $caption): array
     {
-        $result = preg_match_all('/@[^\s.()!\'"\/\\\]+/ui', $caption, $match);
+        $result = preg_match_all('/@[^\s()!\'"\/\\\#\?\:\,\n\t]+/ui', $caption, $match);
 
         return $result ? $match[0] : [];
     }
@@ -149,7 +154,6 @@ final class Service extends BaseEntityService
             ;
 
             $this->entityManager->persist($mention);
-            $this->entityManager->flush();
         }
     }
 }
