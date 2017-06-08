@@ -9,6 +9,7 @@ use InstaParserBundle\Entity\Subscriber;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Internal\Service\BaseEntityService;
+use InstaParserBundle\Operation\Statistics\Get\Dto\Request\Request;
 use InstaParserBundle\Operation\Statistics\Get\Dto\Response\BloggersCount;
 use InstaParserBundle\Operation\Statistics\Get\Dto\Response\StatisticElement;
 use InstaParserBundle\Operation\Statistics\Get\Dto\Response\SuccessfulResponse;
@@ -18,12 +19,12 @@ use InstaParserBundle\Operation\Statistics\Get\Dto\Response\TopSubscriber;
 final class Service extends BaseEntityService
 {
     /**
-     * @param InternalRequestInterface $request
+     * @param InternalRequestInterface|Request $request
      * @return InternalResponseInterface
      */
     public function behave(InternalRequestInterface $request): InternalResponseInterface
     {
-        $brands = $this->repositoryFactory->brand()->findAllWithOrder();
+        $brands = $this->repositoryFactory->brand()->findAllWithOrder($request->getPage(), $request->getStep());
         $statisticElements = [];
 
         foreach ($brands as $brand) {

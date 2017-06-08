@@ -4,6 +4,7 @@ namespace InstaParserBundle\Controller;
 
 use InstaParserBundle\Interaction\Dto\Request\EmptyInternalRequest;
 use InstaParserBundle\Internal\Service\ServiceInterface;
+use InstaParserBundle\Operation\Statistics\Get\Dto\Request\Request;
 use InstaParserBundle\Operation\Statistics\Get\Dto\Response\SuccessfulResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -11,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class StatisticController extends Controller
 {
+    const STEP = 1000;
+
     /**
      * @var ServiceInterface
      */
@@ -28,11 +31,12 @@ final class StatisticController extends Controller
     }
 
     /**
+     * @param int $page
      * @return Response
      */
-    public function getMentionsAction()
+    public function getMentionsAction(int $page = 1)
     {
-        $response = $this->service->behave(new EmptyInternalRequest());
+        $response = $this->service->behave($this->createRequest($page));
         /* @var SuccessfulResponse $response  */
 
         return
@@ -44,5 +48,18 @@ final class StatisticController extends Controller
                     'topBrands' => $response->getTopBrands(),
                 ]
             );
+    }
+
+    /**
+     * @param int $page
+     * @return Request
+     */
+    private function createRequest(int $page)
+    {
+        return
+            (new Request())
+                ->setPage($page)
+                ->setStep(self::STEP)
+            ;
     }
 }
