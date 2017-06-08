@@ -34,41 +34,41 @@
                         <td>
                             {% for subscriber in statistic.todaySubscribers %}
                                 {% if subscriber.isOnPlatform %}
-                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a>
+                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
                                 {% endif %}
                             {% endfor %}
                         <td>
                             {% for subscriber in statistic.todaySubscribers %}
                                 {% if not subscriber.isOnPlatform %}
-                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a>
+                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
                                 {% endif %}
                             {% endfor %}
                         </td>
                         <td>
                             {% for subscriber in statistic.weekSubscribers %}
                                 {% if subscriber.isOnPlatform %}
-                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a>
+                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
                                 {% endif %}
                             {% endfor %}
                         </td>
                         <td>
                             {% for subscriber in statistic.weekSubscribers %}
                                 {% if not subscriber.isOnPlatform %}
-                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a>
+                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
                                 {% endif %}
                             {% endfor %}
                         </td>
                         <td>
                             {% for subscriber in statistic.monthSubscribers %}
                                 {% if subscriber.isOnPlatform %}
-                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a>
+                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
                                 {% endif %}
                             {% endfor %}
                         </td>
                         <td>
                             {% for subscriber in statistic.monthSubscribers %}
                                 {% if not subscriber.isOnPlatform %}
-                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a>
+                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
                                 {% endif %}
                             {% endfor %}
                         </td>
