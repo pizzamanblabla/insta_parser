@@ -126,6 +126,7 @@ final class Service extends BaseEntityService
      */
     private function getOrCreateBrand(string $name): Brand
     {
+        $name = trim($name, '.');
         $brand = $this->repositoryFactory->brand()->findOneByName($name);
 
         if (!$brand) {
