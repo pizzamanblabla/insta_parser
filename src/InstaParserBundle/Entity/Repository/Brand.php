@@ -12,13 +12,20 @@ use Doctrine\ORM\EntityRepository;
 final class Brand extends EntityRepository
 {
     /**
+     * @param int $page
+     * @param int $step
      * @return Entity\Brand[]
      */
-    public function findAllWithOrder()
+    public function findAllWithOrder(int $page, int $step)
     {
+        $offset = $page * $step - $step;
+
         $queryBuilder = $this->createQueryBuilder('b');
 
-        $queryBuilder->orderBy('b.name', 'ASC');
+        $queryBuilder
+            ->setMaxResults($step)
+            ->setFirstResult($offset)
+            ->orderBy('b.name', 'ASC');
 
         return $queryBuilder->getQuery()->getResult();
     }
