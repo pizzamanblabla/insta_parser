@@ -169,26 +169,29 @@ final class Service extends BaseEntityService
      */
     private function createPagination(InternalRequestInterface $request): Pagination
     {
+        $last = ceil($this->repositoryFactory->brand()->getCount()[0]['brands'] / $request->getStep());
+
         return
             (new Pagination())
                 ->setCurrent($request->getPage())
-                ->setList($this->getPaginationList($request->getPage()))
-                ->setLast(ceil($this->repositoryFactory->brand()->getCount()[0]['brands'] / $request->getStep()))
+                ->setList($this->getPaginationList($request->getPage(),$last))
+                ->setLast($last)
             ;
     }
 
     /**
      * @param int $current
+     * @param int $last
      * @return array
      */
-    private function getPaginationList(int $current): array
+    private function getPaginationList(int $current, int $last): array
     {
         $list = [];
 
         for ($i = -2; $i < 3; $i++) {
             $element = $current + $i;
 
-            if ($element > 0) {
+            if ($element > 0 && $element <= $last) {
                 $list[] = $element;
             }
         }
