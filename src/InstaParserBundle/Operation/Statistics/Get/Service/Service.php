@@ -11,6 +11,7 @@ use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Internal\Service\BaseEntityService;
 use InstaParserBundle\Operation\Statistics\Get\Dto\Request\Request;
 use InstaParserBundle\Operation\Statistics\Get\Dto\Response\BloggersCount;
+use InstaParserBundle\Operation\Statistics\Get\Dto\Response\Pagination;
 use InstaParserBundle\Operation\Statistics\Get\Dto\Response\StatisticElement;
 use InstaParserBundle\Operation\Statistics\Get\Dto\Response\SuccessfulResponse;
 use InstaParserBundle\Operation\Statistics\Get\Dto\Response\TopBrand;
@@ -18,6 +19,8 @@ use InstaParserBundle\Operation\Statistics\Get\Dto\Response\TopSubscriber;
 
 final class Service extends BaseEntityService
 {
+    const TOP_COUNT = 20;
+
     /**
      * @param InternalRequestInterface|Request $request
      * @return InternalResponseInterface
@@ -42,15 +45,13 @@ final class Service extends BaseEntityService
 
         $topSubscribers = [];
 
-        foreach ($this->repositoryFactory->subscriber()->findTopWithLimit(10) as $topSubscriber)
-        {
+        foreach ($this->repositoryFactory->subscriber()->findTopWithLimit(self::TOP_COUNT) as $topSubscriber) {
             $topSubscribers[] = $this->createTopSubscriber($topSubscriber);
         }
 
         $topBrands = [];
 
-        foreach ($this->repositoryFactory->brand()->findTopWithLimit(10) as $topBrand)
-        {
+        foreach ($this->repositoryFactory->brand()->findTopWithLimit(self::TOP_COUNT) as $topBrand) {
             $topBrands[] = $this->createTopBrand($topBrand);
         }
 
@@ -59,6 +60,7 @@ final class Service extends BaseEntityService
                 ->setStatistic($statisticElements)
                 ->setTopSubscribers($topSubscribers)
                 ->setTopBrands($topBrands)
+                ->setPagination($this->createPagination($request))
             ;
     }
 
@@ -159,5 +161,38 @@ final class Service extends BaseEntityService
                 ->setBrand($data[0])
                 ->setSubscriberCount($data['subscriberCount'])
             ;
+    }
+
+    /**
+     * @param InternalRequestInterface|Request $request
+     * @return Pagination
+     */
+    private function createPagination(InternalRequestInterface $request): Pagination
+    {
+        return
+            (new Pagination())
+                ->setCurrent($request->getPage())
+                ->setList($this->getPaginationList($request->getPage()))
+                ->setLast(ceil($this->repositoryFactory->brand()->getCount()[0]['brands'] / $request->getStep()))
+            ;
+    }
+
+    /**
+     * @param int $current
+     * @return array
+     */
+    private function getPaginationList(int $current): array
+    {
+        $list = [];
+
+        for ($i = -2; $i < 3; $i++) {
+            $element = $current + $i;
+
+            if ($element > 0) {
+                $list[] = $element;
+            }
+        }
+
+        return $list;
     }
 }

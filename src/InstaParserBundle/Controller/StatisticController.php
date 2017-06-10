@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class StatisticController extends Controller
 {
-    const STEP = 500;
+    const STEP = 100;
 
     /**
      * @var ServiceInterface
@@ -52,6 +52,7 @@ final class StatisticController extends Controller
                     'statistics' => $response->getStatistic(),
                     'topBloggers' => $response->getTopSubscribers(),
                     'topBrands' => $response->getTopBrands(),
+                    'pagination' => $response->getPagination(),
                 ]
             );
     }

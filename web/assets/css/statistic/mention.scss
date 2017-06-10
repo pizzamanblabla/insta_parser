@@ -36,4 +36,16 @@
       margin: 10px 0;
     }
   }
+  .pagination {
+    margin: 5px auto;
+    width: 400px;
+    ul {
+      width: 100%;
+      li {
+        display: inline-block;
+        padding: 10px;
+        border: 1px solid $neutral-grey;
+      };
+    };
+  };
 }

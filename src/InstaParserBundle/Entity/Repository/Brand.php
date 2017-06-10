@@ -49,4 +49,18 @@ final class Brand extends EntityRepository
 
         return $queryBuilder->getQuery()->getResult();
     }
+
+    /**
+     * @return string[]
+     */
+    public function getCount()
+    {
+        $queryBuilder = $this->createQueryBuilder('b');
+
+        $queryBuilder
+            ->select('count(b.id) AS brands')
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

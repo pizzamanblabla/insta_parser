@@ -1,24 +1,27 @@
-# To get started with security, check out the documentation:
-# http://symfony.com/doc/current/security.html
 security:
+    access_control:
+        - { path: ^/, roles: ROLE_ADMIN }
 
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    insta_parser:
+                        password: C6pGRu7Zg5D3P2kd
+                        roles: 'ROLE_ADMIN'
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
+        prod:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        dev:
+            pattern: ^/
             security: false
 
         main:
             anonymous: ~
-            # activate different ways to authenticate
+            http_basic: ~
 
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
