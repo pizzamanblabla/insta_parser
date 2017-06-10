@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class StatisticController extends Controller
 {
-    const STEP = 1000;
+    const STEP = 500;
 
     /**
      * @var ServiceInterface

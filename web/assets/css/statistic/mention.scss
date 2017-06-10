@@ -14,8 +14,11 @@
       width: 100%;
       text-align: center;
       td {
+        table-layout: fixed;
+        max-width: 40px;
         padding: 10px 0;
         border: 1px solid $neutral-grey;
+        overflow: hidden;
       };
       a {
         display: block;
