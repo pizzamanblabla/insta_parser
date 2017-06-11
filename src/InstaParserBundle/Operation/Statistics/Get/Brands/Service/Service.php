@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistics\Get\Service;
+namespace InstaParserBundle\Operation\Statistics\Get\Brands\Service;
 
 use DateTime;
 use InstaParserBundle\Entity\Brand;
@@ -9,13 +9,11 @@ use InstaParserBundle\Entity\Subscriber;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Internal\Service\BaseEntityService;
-use InstaParserBundle\Operation\Statistics\Get\Dto\Request\Request;
-use InstaParserBundle\Operation\Statistics\Get\Dto\Response\BloggersCount;
-use InstaParserBundle\Operation\Statistics\Get\Dto\Response\Pagination;
-use InstaParserBundle\Operation\Statistics\Get\Dto\Response\StatisticElement;
-use InstaParserBundle\Operation\Statistics\Get\Dto\Response\SuccessfulResponse;
-use InstaParserBundle\Operation\Statistics\Get\Dto\Response\TopBrand;
-use InstaParserBundle\Operation\Statistics\Get\Dto\Response\TopSubscriber;
+use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Request\Request;
+use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response\BloggersCount;
+use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response\Pagination;
+use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response\StatisticElement;
+use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response\SuccessfulResponse;
 
 final class Service extends BaseEntityService
 {
@@ -43,23 +41,9 @@ final class Service extends BaseEntityService
             );
         }
 
-        $topSubscribers = [];
-
-        foreach ($this->repositoryFactory->subscriber()->findTopWithLimit(self::TOP_COUNT) as $topSubscriber) {
-            $topSubscribers[] = $this->createTopSubscriber($topSubscriber);
-        }
-
-        $topBrands = [];
-
-        foreach ($this->repositoryFactory->brand()->findTopWithLimit(self::TOP_COUNT) as $topBrand) {
-            $topBrands[] = $this->createTopBrand($topBrand);
-        }
-
         return
             (new SuccessfulResponse())
                 ->setStatistic($statisticElements)
-                ->setTopSubscribers($topSubscribers)
-                ->setTopBrands($topBrands)
                 ->setPagination($this->createPagination($request))
             ;
     }
@@ -135,32 +119,6 @@ final class Service extends BaseEntityService
     private function getMentions(Brand $brand, DateTime $date): array
     {
         return $this->repositoryFactory->mention()->findAllByBrandAndTimeSpan($brand, $date);
-    }
-
-    /**
-     * @param mixed[] $data
-     * @return TopSubscriber
-     */
-    private function createTopSubscriber(array $data)
-    {
-        return
-            (new TopSubscriber())
-                ->setSubscriber($data[0])
-                ->setBrandCount($data['brandCount'])
-            ;
-    }
-
-    /**
-     * @param mixed[] $data
-     * @return TopBrand
-     */
-    private function createTopBrand(array $data)
-    {
-        return
-            (new TopBrand())
-                ->setBrand($data[0])
-                ->setSubscriberCount($data['subscriberCount'])
-            ;
     }
 
     /**

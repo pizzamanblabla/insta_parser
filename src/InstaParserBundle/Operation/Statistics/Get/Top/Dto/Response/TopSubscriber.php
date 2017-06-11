@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistics\Get\Dto\Response;
+namespace InstaParserBundle\Operation\Statistics\Get\Top\Dto\Response;
 
 use InstaParserBundle\Entity\Subscriber;
 

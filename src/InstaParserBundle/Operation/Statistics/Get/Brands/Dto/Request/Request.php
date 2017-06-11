@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistics\Get\Dto\Request;
+namespace InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Request;
 
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 

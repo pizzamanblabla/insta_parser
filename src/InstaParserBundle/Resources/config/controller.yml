@@ -1,6 +1,7 @@
 services:
-    insta_parser.controller.statistic.metions:
+    insta_parser.controller.statistic.mentions:
         class: InstaParserBundle\Controller\StatisticController
         arguments:
             - '@service_container'
-            - '@insta_parser.operation.statistic.get.service'
+            - '@insta_parser.operation.statistic.get.brands.service'
+            - '@insta_parser.operation.statistic.get.top.service'

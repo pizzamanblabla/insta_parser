@@ -1,0 +1,14 @@
+.tops {
+  width: 60%;
+  margin: auto;
+  padding: 10px;
+  background-color: $white;
+  border: 1px solid $neutral-grey;
+  @include border-radius(3px);
+  .top {
+    margin: 10px 0;
+    display: inline-block;
+    width: 45%;
+    text-align: center;
+  };
+}

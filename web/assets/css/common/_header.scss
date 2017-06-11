@@ -8,7 +8,20 @@
     font-size: 30px;
     padding: 10px;
     display: block;
+    width: 200px;
+    margin: auto;
     text-align: center;
     @include playfair;
-  }
+  };
+  .menu {
+    width: 300px;
+    display: inline-block;
+    float: left;
+    li {
+      display: inline-block;
+      padding: 10px;
+      margin: 5px;
+      border: 1px solid $neutral-grey;
+    };
+  };
 }

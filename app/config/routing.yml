@@ -1,4 +1,9 @@
-controller.statistic:
+controller.statistic.brands:
     path: '/'
-    defaults: { _controller: insta_parser.controller.statistic.metions:getMentionsAction, security: false }
+    defaults: { _controller: insta_parser.controller.statistic.mentions:getMentionsAction, security: false }
+    methods: [GET]
+
+controller.statistic.top:
+    path: '/top'
+    defaults: { _controller: insta_parser.controller.statistic.mentions:getTopAction, security: false }
     methods: [GET]

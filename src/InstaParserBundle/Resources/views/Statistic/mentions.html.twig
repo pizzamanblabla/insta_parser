@@ -1,81 +1,79 @@
 {% extends 'InstaParserBundle:Common:base.html.twig' %}
 {% block content %}
-    <div class="content">
-        {% include 'InstaParserBundle:Statistic:sidebar.html.twig' %}
-        <div class="mentions">
-            {% include 'InstaParserBundle:Statistic:pagination.html.twig' %}
-            <table id="mention-table" class="mention-table">
-                <tr class="table-head">
-                    <td colspan="2">Бренд</td>
-                    <td colspan="2">Сегодня</td>
-                    <td colspan="2">За 7 дней</td>
-                    <td colspan="2">За месяц</td>
+    <div class="mentions">
+        {% include 'InstaParserBundle:Statistic:pagination.html.twig' %}
+        <table id="mention-table" class="mention-table">
+            <tr class="table-head">
+                <td colspan="2">Бренд</td>
+                <td colspan="2">Сегодня</td>
+                <td colspan="2">За 7 дней</td>
+                <td colspan="2">За месяц</td>
+            </tr>
+            {% for statistic in statistics %}
+                <tr>
+                    <td rowspan="3" colspan="2">
+                        <a href="https://www.instagram.com/{{ statistic.brand.name|trim('@') }}">{{ statistic.brand.name }}</a>
+                    </td>
+                    <td>Есть в GB</td>
+                    <td>Нет в GB</td>
+                    <td>Есть в GB</td>
+                    <td>Нет в GB</td>
+                    <td>Есть в GB</td>
+                    <td>Нет в GB</td>
                 </tr>
-                {% for statistic in statistics %}
-                    <tr>
-                        <td rowspan="3" colspan="2">
-                            <a href="https://www.instagram.com/{{ statistic.brand.name|trim('@') }}">{{ statistic.brand.name }}</a>
-                        </td>
-                        <td>Есть в GB</td>
-                        <td>Нет в GB</td>
-                        <td>Есть в GB</td>
-                        <td>Нет в GB</td>
-                        <td>Есть в GB</td>
-                        <td>Нет в GB</td>
-                    </tr>
-                    <tr>
-                        <td>{{ statistic.todayBloggerCount.fromPlatform }}</td>
-                        <td>{{ statistic.todayBloggerCount.notFromPlatform }}</td>
-                        <td>{{ statistic.weekBloggerCount.fromPlatform }}</td>
-                        <td>{{ statistic.weekBloggerCount.notFromPlatform }}</td>
-                        <td>{{ statistic.monthBloggerCount.fromPlatform }}</td>
-                        <td>{{ statistic.monthBloggerCount.notFromPlatform }}</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            {% for subscriber in statistic.todaySubscribers %}
-                                {% if subscriber.isOnPlatform %}
-                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
-                                {% endif %}
-                            {% endfor %}
-                        <td>
-                            {% for subscriber in statistic.todaySubscribers %}
-                                {% if not subscriber.isOnPlatform %}
-                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for subscriber in statistic.weekSubscribers %}
-                                {% if subscriber.isOnPlatform %}
-                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for subscriber in statistic.weekSubscribers %}
-                                {% if not subscriber.isOnPlatform %}
-                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for subscriber in statistic.monthSubscribers %}
-                                {% if subscriber.isOnPlatform %}
-                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for subscriber in statistic.monthSubscribers %}
-                                {% if not subscriber.isOnPlatform %}
-                                    <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
+                <tr>
+                    <td>{{ statistic.todayBloggerCount.fromPlatform }}</td>
+                    <td>{{ statistic.todayBloggerCount.notFromPlatform }}</td>
+                    <td>{{ statistic.weekBloggerCount.fromPlatform }}</td>
+                    <td>{{ statistic.weekBloggerCount.notFromPlatform }}</td>
+                    <td>{{ statistic.monthBloggerCount.fromPlatform }}</td>
+                    <td>{{ statistic.monthBloggerCount.notFromPlatform }}</td>
+                </tr>
+                <tr>
+                    <td>
+                        {% for subscriber in statistic.todaySubscribers %}
+                            {% if subscriber.isOnPlatform %}
+                                <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
+                            {% endif %}
+                        {% endfor %}
+                    <td>
+                        {% for subscriber in statistic.todaySubscribers %}
+                            {% if not subscriber.isOnPlatform %}
+                                <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for subscriber in statistic.weekSubscribers %}
+                            {% if subscriber.isOnPlatform %}
+                                <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for subscriber in statistic.weekSubscribers %}
+                            {% if not subscriber.isOnPlatform %}
+                                <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for subscriber in statistic.monthSubscribers %}
+                            {% if subscriber.isOnPlatform %}
+                                <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for subscriber in statistic.monthSubscribers %}
+                            {% if not subscriber.isOnPlatform %}
+                                <a href="{{ subscriber.link }}">@{{ subscriber.name }}</a><br>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% include 'InstaParserBundle:Statistic:pagination.html.twig' %}
     </div>
 {% endblock %}

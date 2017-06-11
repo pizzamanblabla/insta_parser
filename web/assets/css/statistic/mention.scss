@@ -25,17 +25,6 @@
       };
     };
   };
-  .sidebar {
-    float: left;
-    width: 15%;
-    padding: 10px;
-    background-color: $white;
-    border: 1px solid $neutral-grey;
-    @include border-radius(3px);
-    .top {
-      margin: 10px 0;
-    }
-  }
   .pagination {
     margin: 5px auto;
     width: 400px;

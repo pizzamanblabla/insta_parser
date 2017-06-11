@@ -1,6 +1,13 @@
 services:
-    insta_parser.operation.statistic.get.service:
-        class: InstaParserBundle\Operation\Statistics\Get\Service\Service
+    insta_parser.operation.statistic.get.brands.service:
+        class: InstaParserBundle\Operation\Statistics\Get\Brands\Service\Service
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+
+    insta_parser.operation.statistic.get.top.service:
+        class: InstaParserBundle\Operation\Statistics\Get\Top\Service\Service
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@insta_parser.repository_factory'

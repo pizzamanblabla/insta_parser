@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistics\Get\Dto\Response;
+namespace InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response;
 
 class Pagination
 {
