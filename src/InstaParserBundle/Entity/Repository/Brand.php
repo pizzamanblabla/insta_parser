@@ -23,11 +23,21 @@ final class Brand extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('b');
 
         $queryBuilder
+            ->select('b AS brand', 'count(DISTINCT s.id) AS subscriberCount', 'sum(case s.isOnPlatform when true then 1 else 0 end) AS subscriberGBCount')
             ->setMaxResults($step)
+            ->leftJoin(Entity\Mention::class,'m', Join::WITH, 'm.brand = b.id')
+            ->leftJoin('m.subscriber', 's')
+            ->groupBy('b.id')
             ->setFirstResult($offset)
-            ->orderBy('b.name', 'ASC');
-
-        return $queryBuilder->getQuery()->getResult();
+            ->orderBy('subscriberCount', 'DESC')
+        ;
+        return
+            array_map(
+                function (array $element) {
+                    return $element['brand'];
+                },
+                $queryBuilder->getQuery()->getResult()
+            );
     }
 
     /**
