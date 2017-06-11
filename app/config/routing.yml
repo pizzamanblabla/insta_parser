@@ -1,5 +1,10 @@
-controller.statistic.brands:
+controller.statistic.brands.basic:
     path: '/'
+    defaults: { _controller: insta_parser.controller.statistic.mentions:getMentionsAction, security: false }
+    methods: [GET]
+
+controller.statistic.brands:
+    path: '/brand/{page}'
     defaults: { _controller: insta_parser.controller.statistic.mentions:getMentionsAction, security: false }
     methods: [GET]
 

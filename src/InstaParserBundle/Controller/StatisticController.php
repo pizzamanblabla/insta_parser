@@ -4,7 +4,6 @@ namespace InstaParserBundle\Controller;
 
 use InstaParserBundle\Interaction\Dto\Request\EmptyInternalRequest;
 use InstaParserBundle\Internal\Service\ServiceInterface;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Request\Request;
 use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response\SuccessfulResponse;
 use InstaParserBundle\Operation\Statistics\Get\Top\Dto\Response\SuccessfulResponse as TopSuccessfulResponse;
@@ -40,17 +39,11 @@ final class StatisticController extends Controller
     }
 
     /**
-     * @param HttpRequest $request
+     * @param int $page
      * @return Response
      */
-    public function getMentionsAction(HttpRequest $request)
+    public function getMentionsAction($page = 1)
     {
-        $page = $request->query->get('page');
-
-        if (!$page) {
-            $page = 1;
-        }
-
         $response = $this->brandService->behave($this->createRequest($page));
         /* @var SuccessfulResponse $response  */
 
