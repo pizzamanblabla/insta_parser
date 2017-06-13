@@ -11,7 +11,7 @@ use InstaParserBundle\Operation\Statistics\Get\Top\Dto\Response\SuccessfulRespon
 
 final class Service extends BaseEntityService
 {
-    const TOP_COUNT = 100;
+    const TOP_MIN_COUNT = 5;
 
     /**
      * {@inheritdoc}
@@ -20,13 +20,13 @@ final class Service extends BaseEntityService
     {
         $topSubscribers = [];
 
-        foreach ($this->repositoryFactory->subscriber()->findTopWithLimit(self::TOP_COUNT) as $topSubscriber) {
+        foreach ($this->repositoryFactory->subscriber()->findTopUntilLimit(self::TOP_MIN_COUNT) as $topSubscriber) {
             $topSubscribers[] = $this->createTopSubscriber($topSubscriber);
         }
 
         $topBrands = [];
 
-        foreach ($this->repositoryFactory->brand()->findTopWithLimit(self::TOP_COUNT) as $topBrand) {
+        foreach ($this->repositoryFactory->brand()->findTopUntilLimit(self::TOP_MIN_COUNT) as $topBrand) {
             $topBrands[] = $this->createTopBrand($topBrand);
         }
 

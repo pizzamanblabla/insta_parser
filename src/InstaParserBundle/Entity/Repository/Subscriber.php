@@ -49,4 +49,25 @@ final class Subscriber extends EntityRepository
 
         return $queryBuilder->getQuery()->getResult();
     }
+
+    /**
+     * @param int $limit
+     * @return Entity\Subscriber[]
+     */
+    public function findTopUntilLimit(int $limit)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+
+        $queryBuilder
+            ->select('s', 'count(b.id) AS brandCount')
+            ->leftJoin(Entity\Mention::class,'m', Join::WITH, 'm.subscriber = s.id')
+            ->leftJoin('m.brand', 'b')
+            ->groupBy('s.id')
+            ->having('count(b.id) >= :limit')
+            ->setParameter('limit', $limit)
+            ->orderBy('brandCount', 'DESC')
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

@@ -7,8 +7,11 @@
   @include border-radius(3px);
   .top {
     margin: 10px 0;
-    display: inline-block;
+    float: left;
     width: 45%;
     text-align: center;
   };
+}
+.clear {
+  clear: both;
 }
