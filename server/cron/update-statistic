@@ -1,0 +1,1 @@
+*/15 * * * * www-data /var/www/bin/console mention:update > /var/log/syslog

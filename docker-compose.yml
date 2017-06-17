@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  instaparser:
+    container_name: instaparser
+    environment:
+      - ENVIRONMENT=development
+    build: .
+    command: "./server/fix_permissions.sh"
+    volumes:
+      - ./:/var/www
+    ports:
+      - 80:80
+    links:
+      - instaparser-postgresql
+
+  instaparser-postgresql:
+    container_name: instaparser-postgresql
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
