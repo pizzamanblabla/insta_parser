@@ -19,8 +19,13 @@ class Version20170608172738 extends AbstractMigration
             $name = trim($line);
 
             $this->addSql(
-                strtr(
-                    "INSERT INTO subscriber (name, link, status, is_on_platform) VALUES ('{name}', '{link}', 'ready', true);",
+                strtr("
+                    INSERT INTO subscriber (name, link, status, is_on_platform) 
+                    SELECT * FROM (SELECT '{name}', '{link}', 'ready', true) AS tmp
+                    WHERE NOT EXISTS (
+                        SELECT name FROM subscriber WHERE name = '{name}'
+                    ) LIMIT 1;
+                    ",
                     [
                         '{name}' => $name,
                         '{link}' => 'https://www.instagram.com/' . $name,
@@ -38,8 +43,13 @@ class Version20170608172738 extends AbstractMigration
             $name = trim($line);
 
             $this->addSql(
-                strtr(
-                    "INSERT INTO subscriber (name, link, status, is_on_platform) VALUES ('{name}', '{link}', 'ready', false);",
+                strtr("
+                    INSERT INTO subscriber (name, link, status, is_on_platform) 
+                    SELECT * FROM (SELECT '{name}', '{link}', 'ready', false) AS tmp
+                    WHERE NOT EXISTS (
+                        SELECT name FROM subscriber WHERE name = '{name}'
+                    ) LIMIT 1;
+                    ",
                     [
                         '{name}' => $name,
                         '{link}' => 'https://www.instagram.com/' . $name,

@@ -56,6 +56,11 @@ SQL
             );
 SQL
         );
+
+        $this->addSql(<<<SQL
+            CREATE UNIQUE INDEX subscriber_name_unique_idx ON subscriber (name);
+SQL
+        );
     }
 
     /**
