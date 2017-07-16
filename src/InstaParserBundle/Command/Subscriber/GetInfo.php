@@ -55,7 +55,7 @@ final class GetInfo extends BaseOperationCommand
         return
             (new SubscribersRequest())
                 ->setSubscribers(
-                    $this->repositoryFactory->subscriber()->findAllAvailableWithLimit(self::UPDATE_LIMIT)
+                    $this->repositoryFactory->subscriber()->findAllAWithoutContactInfo(self::UPDATE_LIMIT)
                 );
     }
 }
