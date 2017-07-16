@@ -50,6 +50,27 @@ class Subscriber
     private $isOnPlatform;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="subscribers", type="bigint")
+     */
+    private $subscribers;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="subscriptions", type="bigint")
+     */
+    private $subscriptions;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=128)
+     */
+    private $email;
+
+    /**
      * @var DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
@@ -143,6 +164,60 @@ class Subscriber
     public function setIsOnPlatform($isOnPlatform)
     {
         $this->isOnPlatform = $isOnPlatform;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSubscribers()
+    {
+        return $this->subscribers;
+    }
+
+    /**
+     * @param int $subscribers
+     * @return Subscriber
+     */
+    public function setSubscribers($subscribers)
+    {
+        $this->subscribers = $subscribers;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSubscriptions()
+    {
+        return $this->subscriptions;
+    }
+
+    /**
+     * @param int $subscriptions
+     * @return Subscriber
+     */
+    public function setSubscriptions($subscriptions)
+    {
+        $this->subscriptions = $subscriptions;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     * @return Subscriber
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
         return $this;
     }
 

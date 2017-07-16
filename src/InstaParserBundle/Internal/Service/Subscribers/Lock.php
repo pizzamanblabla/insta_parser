@@ -1,19 +1,19 @@
 <?php
 
-namespace InstaParserBundle\Internal\Service\Collection\Service;
+namespace InstaParserBundle\Internal\Service\Subscribers;
 
 use Doctrine\ORM\EntityManagerInterface;
 use InstaParserBundle\Entity\Repository\FactoryInterface;
 use InstaParserBundle\Entity\Subscriber;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
+use InstaParserBundle\Interaction\Dto\Request\SubscribersRequest;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Interaction\Enum\UpdateStatus;
 use InstaParserBundle\Internal\Service\BaseEntityService;
 use InstaParserBundle\Internal\Service\ServiceInterface;
-use InstaParserBundle\Operation\Statistics\Update\Collection\Dto\Request\Request;
 use Psr\Log\LoggerInterface;
 
-final class LockSubscribers extends BaseEntityService
+final class Lock extends BaseEntityService
 {
     /**
      * @var ServiceInterface
@@ -39,7 +39,7 @@ final class LockSubscribers extends BaseEntityService
 
     /**
      * {@inheritdoc}
-     * @param InternalRequestInterface|Request $request
+     * @param InternalRequestInterface|SubscribersRequest $request
      */
     public function behave(InternalRequestInterface $request): InternalResponseInterface
     {

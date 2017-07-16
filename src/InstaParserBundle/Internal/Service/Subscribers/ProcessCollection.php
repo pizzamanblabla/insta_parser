@@ -1,22 +1,19 @@
 <?php
 
-namespace InstaParserBundle\Internal\Service\Collection\Service;
+namespace InstaParserBundle\Internal\Service\Subscribers;
 
-use Doctrine\ORM\EntityManagerInterface;
-use InstaParserBundle\Entity\Repository\FactoryInterface;
 use InstaParserBundle\Entity\Subscriber;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
+use InstaParserBundle\Interaction\Dto\Request\SubscriberRequest;
+use InstaParserBundle\Interaction\Dto\Request\SubscribersRequest;
 use InstaParserBundle\Interaction\Dto\Response\EmptyInnerSuccessfulResponse;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Internal\DataUpdater\DataUpdaterInterface;
-use InstaParserBundle\Internal\Service\BaseEntityService;
-use InstaParserBundle\Internal\Service\Collection\Dto\Request\Request;
 use InstaParserBundle\Internal\Service\ServiceInterface;
-use InstaParserBundle\Operation\Statistics\Update\Subscriber\Dto\Request\Request as SubscriberRequest;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
-final class Service extends BaseEntityService
+final class ProcessCollection implements ServiceInterface
 {
     use LoggerAwareTrait;
 
@@ -33,19 +30,13 @@ final class Service extends BaseEntityService
     /**
      * @param ServiceInterface $decoratedService
      * @param DataUpdaterInterface $dataUpdater
-     * @param EntityManagerInterface $entityManager
-     * @param FactoryInterface $repositoryFactory
      * @param LoggerInterface $logger
      */
     public function __construct(
         ServiceInterface $decoratedService,
         DataUpdaterInterface $dataUpdater,
-        EntityManagerInterface $entityManager,
-        FactoryInterface $repositoryFactory,
         LoggerInterface $logger
     ) {
-        parent::__construct($entityManager, $repositoryFactory, $logger);
-
         $this->setLogger($logger);
 
         $this->decoratedService = $decoratedService;
@@ -54,14 +45,15 @@ final class Service extends BaseEntityService
 
     /**
      * {@inheritdoc}
-     * @param InternalRequestInterface|Request $request
+     * @param InternalRequestInterface|SubscribersRequest $request
      */
     public function behave(InternalRequestInterface $request): InternalResponseInterface
     {
         foreach ($request->getSubscribers() as $subscriber) {
-            $response = $this->decoratedService->behave($this->createInternalRequest($subscriber));
+            $subscriberRequest = $this->createInternalRequest($subscriber);
+            $response = $this->decoratedService->behave($subscriberRequest);
 
-            $this->dataUpdater->update($response);
+            $this->dataUpdater->update($subscriberRequest, $response);
         }
 
         return new EmptyInnerSuccessfulResponse();

@@ -1,11 +1,10 @@
 <?php
 
-namespace InstaParserBundle\Internal\Service\Collection\Dto\Request;
+namespace InstaParserBundle\Interaction\Dto\Request;
 
 use InstaParserBundle\Entity\Subscriber;
-use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 
-class Request implements InternalRequestInterface
+class SubscribersRequest implements InternalRequestInterface
 {
     /**
      * @var Subscriber[]
@@ -22,7 +21,7 @@ class Request implements InternalRequestInterface
 
     /**
      * @param Subscriber[] $subscribers
-     * @return Request
+     * @return $this
      */
     public function setSubscribers(array $subscribers)
     {

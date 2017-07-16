@@ -5,6 +5,7 @@ namespace InstaParserBundle\Command\Subscriber;
 use InstaParserBundle\Command\BaseOperationCommand;
 use InstaParserBundle\Entity\Repository\FactoryInterface;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
+use InstaParserBundle\Interaction\Dto\Request\SubscribersRequest;
 use InstaParserBundle\Internal\Service\ServiceInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\InputArgument;
@@ -43,8 +44,6 @@ final class GetInfo extends BaseOperationCommand
         $this
             ->setName('subscriber:get_info')
             ->setDescription('Updating')
-            ->addArgument('name', InputArgument::REQUIRED, 'Name of subscriber')
-            ->addOption('platform', 'p', InputOption::VALUE_NONE)
         ;
     }
 
@@ -54,7 +53,7 @@ final class GetInfo extends BaseOperationCommand
     protected function createRequest(InputInterface $input): InternalRequestInterface
     {
         return
-            (new Request())
+            (new SubscribersRequest())
                 ->setSubscribers(
                     $this->repositoryFactory->subscriber()->findAllAvailableWithLimit(self::UPDATE_LIMIT)
                 );

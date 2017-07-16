@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistics\Update\Subscriber\Service;
+namespace InstaParserBundle\Internal\Service\Subscriber;
 
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Interaction\Dto\Response\EmptyInnerErroneousResponse;
