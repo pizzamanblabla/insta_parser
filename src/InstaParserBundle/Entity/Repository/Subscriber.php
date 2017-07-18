@@ -44,7 +44,6 @@ final class Subscriber extends EntityRepository
             ->andWhere('s.email is NULL')
             ->andWhere('s.subscribers is NULL')
             ->andWhere('s.subscriptions is NULL')
-            ->andWhere('s.isOnPlatform = false')
             ->orderBy('s.updatedAt', 'ASC')
             ->setMaxResults($limit)
         ;

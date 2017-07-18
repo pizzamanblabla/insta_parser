@@ -25,10 +25,13 @@ final class DataUpdater extends BaseDataUpdater
             $request->getSubscriber()
                 ->setStatus(UpdateStatus::READY)
                 ->setUpdatedAt(new DateTime())
-                ->setEmail($this->parseEmails($response->getDescription()))
                 ->setSubscribers($response->getSubscriberCount()->getCount())
                 ->setSubscriptions($response->getSubscriptionCount()->getCount())
             ;
+
+            if (!is_null($response->getDescription())) {
+                $request->getSubscriber()->setEmail($this->parseEmails($response->getDescription()));
+            }
         }
     }
 

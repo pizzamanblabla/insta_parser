@@ -34,7 +34,6 @@ class SuccessfulResponse implements InternalResponseInterface
     /**
      * @var string
      *
-     * @Assert\NotNull()
      * @Assert\Type("string")
      *
      * @Serializer\Type("string")
