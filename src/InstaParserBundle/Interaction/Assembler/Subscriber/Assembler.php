@@ -16,6 +16,10 @@ final class Assembler implements RequestAssemblerInterface
      */
     public function assemble(InternalRequestInterface $request): RequestInterface
     {
-        return new Request('GET', $request->getSubscriber()->getLink());
+        return
+            new Request(
+                'GET',
+                $request->getSubscriber()->getLink() . '/'
+            );
     }
 }

@@ -2,7 +2,11 @@
 
 namespace InstaParserBundle\Interaction\RemoteCall;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleTor\Middleware;
 use InstaParserBundle\DataExtractor\DataExtractorInterface;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
@@ -85,10 +89,18 @@ final class RemoteCall implements RemoteCallInterface
         $httpRequest = $this->requestAssembler->assemble($request);
 
         $this->logger->info('Sending remote request');
-        $httpResponse = $this->client->send($httpRequest);
+        $httpResponse = $this->setUpClient()->send($httpRequest);
 
         $this->logger->info('Extracting data from http response');
         $extracted = $this->dataExtractor->extract($httpResponse);
+
+        if (!count($extracted)) {
+            $this->logger->info('Failed. Sending unmasked remote request');
+            $httpResponse = $this->client->send($httpRequest);
+
+            $this->logger->info('Extracting data from http response');
+            $extracted = $this->dataExtractor->extract($httpResponse);
+        }
 
         $this->logger->info('Building internal request');
         return $this->buildInternalRequest($extracted);
@@ -113,5 +125,17 @@ final class RemoteCall implements RemoteCallInterface
         }
 
         return $response;
+    }
+
+    /**
+     * @return Client
+     */
+    private function setUpClient()
+    {
+        $stack = new HandlerStack();
+        $stack->setHandler(new CurlHandler());
+        $stack->push(Middleware::tor());
+
+        return new Client(['handler' => $stack]);
     }
 }

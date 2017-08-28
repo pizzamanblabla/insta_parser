@@ -8,9 +8,7 @@ use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Interaction\Dto\Request\SubscribersRequest;
 use InstaParserBundle\Internal\Service\ServiceInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 
 final class GetInfo extends BaseOperationCommand
 {

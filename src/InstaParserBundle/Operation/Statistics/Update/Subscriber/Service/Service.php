@@ -38,6 +38,8 @@ final class Service implements ServiceInterface
         try {
             return $this->remoteCall->call($request);
         } catch (Throwable $e) {
+            $this->logger->warning(substr($e->getMessage(), 0, 250));
+
             return new EmptyInnerErroneousResponse($e);
         }
     }

@@ -19,7 +19,7 @@ final class DataUpdater extends BaseDataUpdater
      */
     public function update(InternalRequestInterface $request, InternalResponseInterface $response)
     {
-        if (!$response->getType()->isSuccessful()) {
+        if (!$response->getType()->isSuccessful() || is_null($response->getSubscriberCount())) {
             $request->getSubscriber()->setStatus(UpdateStatus::FAILED);
         } else {
             $request->getSubscriber()
