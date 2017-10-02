@@ -141,7 +141,7 @@ class Subscriber
 
     /**
      * @param string $status
-     * @return $this
+     * @return Subscriber
      */
     public function setStatus($status)
     {
@@ -195,7 +195,7 @@ class Subscriber
 
     /**
      * @param int $subscriptions
-     * @return Subscriber
+     * @return $this
      */
     public function setSubscriptions($subscriptions)
     {
@@ -213,7 +213,7 @@ class Subscriber
 
     /**
      * @param string $email
-     * @return Subscriber
+     * @return $this
      */
     public function setEmail($email)
     {
@@ -231,7 +231,7 @@ class Subscriber
 
     /**
      * @param DateTime $updatedAt
-     * @return $this
+     * @return Subscriber
      */
     public function setUpdatedAt(DateTime $updatedAt)
     {

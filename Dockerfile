@@ -23,7 +23,8 @@ RUN add-apt-repository -y ppa:ondrej/php \
         php7.0-pgsql \
         unzip \
         nginx \
-        npm
+        npm \
+        tor
 
 # misc commands and configs
 RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php/7.0/fpm/php.ini \

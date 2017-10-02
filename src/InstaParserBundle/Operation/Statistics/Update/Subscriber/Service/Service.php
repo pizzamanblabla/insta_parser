@@ -40,7 +40,7 @@ final class Service implements ServiceInterface
         } catch (Throwable $e) {
             $this->logger->warning(substr($e->getMessage(), 0, 250));
 
-            return new EmptyInnerErroneousResponse($e);
+            return new EmptyInnerErroneousResponse();
         }
     }
 }

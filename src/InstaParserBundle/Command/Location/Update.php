@@ -1,10 +1,10 @@
 <?php
 
-namespace InstaParserBundle\Command\Mention;
+namespace InstaParserBundle\Command\Location;
 
 use InstaParserBundle\Command\BaseUpdateCommand;
+use InstaParserBundle\Interaction\Dto\Request\CollectionRequest;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
-use InstaParserBundle\Operation\Statistics\Update\Collection\Dto\Request\Request;
 use Symfony\Component\Console\Input\InputInterface;
 
 final class Update extends BaseUpdateCommand
@@ -17,7 +17,7 @@ final class Update extends BaseUpdateCommand
     protected function configure()
     {
         $this
-            ->setName('mention:update')
+            ->setName('location:update')
             ->setDescription('Updating')
         ;
     }
@@ -28,9 +28,9 @@ final class Update extends BaseUpdateCommand
     protected function createRequest(InputInterface $input): InternalRequestInterface
     {
         return
-            (new Request())
-                ->setSubscribers(
-                    $this->repositoryFactory->subscriber()->findAllAvailableWithLimit(self::UPDATE_LIMIT)
+            (new CollectionRequest())
+                ->setCollection(
+                    $this->repositoryFactory->location()->findAllWithoutData(self::UPDATE_LIMIT)
                 );
     }
 }

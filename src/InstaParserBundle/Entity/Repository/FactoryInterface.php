@@ -18,4 +18,19 @@ interface FactoryInterface
      * @return Subscriber
      */
     public function subscriber(): Subscriber;
+
+    /**
+     * @return Hashtag
+     */
+    public function hashtag(): Hashtag;
+
+    /**
+     * @return Location
+     */
+    public function location(): Location;
+
+    /**
+     * @return Post
+     */
+    public function Post(): Post;
 }
