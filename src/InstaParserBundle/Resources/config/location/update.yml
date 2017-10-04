@@ -1,0 +1,79 @@
+services:
+    insta_parser.operation.location.update.transactional:
+        class: InstaParserBundle\Internal\Service\Transactional
+        arguments:
+            - '@insta_parser.operation.location.update.collection.service'
+            - '@doctrine.orm.entity_manager'
+            - '@logger'
+
+    insta_parser.operation.location.update.collection.service:
+        class: InstaParserBundle\Internal\Service\ProcessCollection
+        arguments:
+            - '@insta_parser.operation.location.update.service'
+            - '@insta_parser.operation.location.update.request_factory'
+            - 'setLocation'
+            - '@logger'
+
+    insta_parser.operation.location.update.service:
+        class: InstaParserBundle\Internal\Service\UpdateWithRemoteCall
+        arguments:
+            - '@insta_parser.operation.location.update.remote_call'
+            - '@insta_parser.operation.location.update.data_updater'
+            - '@logger'
+
+    insta_parser.operation.location.update.data_updater:
+        class: InstaParserBundle\Operation\Location\Update\DataUpdater\DataUpdater
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+
+    insta_parser.operation.location.update.remote_call:
+        class: InstaParserBundle\Interaction\RemoteCall\RemoteCall
+        arguments:
+            - '@insta_parser.operation.location.update.request_assembler'
+            - '@guzzle.client'
+            - '@insta_parser.operation.location.update.data_extractor'
+            - '@insta_parser.jms.object_builder'
+            - '@insta_parser.operation.location.update.response_factory'
+            - '@validator'
+            - '@logger'
+
+    insta_parser.operation.location.update.request_assembler:
+        class: InstaParserBundle\Operation\Location\Update\Assembler\Assembler
+        arguments:
+            - ''
+            - ''
+
+    insta_parser.operation.location.update.data_extractor:
+        class: Pizzamanblabla\DataTransformerBundle\DataExtractor\SearchNodes
+        arguments:
+            - '@insta_parser.operation.location.update.data_extractor.http_response_to_array'
+            -
+                - 'biography'
+                - 'followed_by'
+                - 'follows'
+
+    insta_parser.operation.location.update.data_extractor.http_response_to_array:
+        class: InstaParserBundle\DataExtractor\Response\Content
+        arguments:
+            - '@insta_parser.operation.location.update.data_extractor.json_from_html'
+
+    insta_parser.operation.location.update.data_extractor.json_from_html:
+        class: Pizzamanblabla\DataTransformerBundle\DataExtractor\RegExp
+        arguments:
+            - '@pizzamanblabla.data_transformer.payload_modifier.json'
+            - '@insta_parser.operation.location.update.subscriber.sanitizer'
+            - '/{".+;/ui'
+
+    insta_parser.operation.location.update.subscriber.sanitizer:
+        class: Pizzamanblabla\DataTransformerBundle\Sanitizer\Sanitizer
+        arguments:
+            -
+                - ';'
+
+    insta_parser.operation.location.update.response_factory:
+        class: InstaParserBundle\Operation\Location\Update\Dto\Response\ResponseFactory
+
+    insta_parser.operation.location.update.request_factory:
+        class: InstaParserBundle\Operation\Location\Update\Dto\Request\RequestFactory

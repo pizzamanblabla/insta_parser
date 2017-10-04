@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Operation\Location\Update\Dto;
+namespace InstaParserBundle\Operation\Location\Update\Dto\Request;
 
 use InstaParserBundle\Entity\Location;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;

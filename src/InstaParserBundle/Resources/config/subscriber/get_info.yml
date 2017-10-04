@@ -15,9 +15,17 @@ services:
             - '@logger'
 
     insta_parser.operation.subscribers.get_info.service:
-        class: InstaParserBundle\Internal\Service\Subscribers\ProcessCollection
+        class: InstaParserBundle\Internal\Service\ProcessCollection
         arguments:
             - '@insta_parser.operation.subscribers.get_info.subscriber.service'
+            - '@insta_parser.operation.subscribers.get_info.subscriber.request_factory'
+            - 'setSubscriber'
+            - '@logger'
+
+    insta_parser.operation.subscribers.get_info.subscriber.service:
+        class: InstaParserBundle\Internal\Service\UpdateWithRemoteCall
+        arguments:
+            - '@insta_parser.operation.subscribers.get_info.subscriber.remote_call'
             - '@insta_parser.operation.subscribers.get_info.data_updater'
             - '@logger'
 
@@ -26,12 +34,6 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@insta_parser.repository_factory'
-            - '@logger'
-
-    insta_parser.operation.subscribers.get_info.subscriber.service:
-        class: InstaParserBundle\Internal\Service\Subscriber\Service
-        arguments:
-            - '@insta_parser.operation.subscribers.get_info.subscriber.remote_call'
             - '@logger'
 
     insta_parser.operation.subscribers.get_info.subscriber.remote_call:
@@ -49,7 +51,7 @@ services:
         class: InstaParserBundle\Interaction\Assembler\Subscriber\Assembler
 
     insta_parser.operation.subscribers.get_info.subscriber.data_extractor:
-        class: InstaParserBundle\DataExtractor\SearchNodes
+        class: Pizzamanblabla\DataTransformerBundle\DataExtractor\SearchNodes
         arguments:
             - '@insta_parser.operation.subscribers.get_info.subscriber.data_extractor.http_response_to_array'
             -
@@ -63,20 +65,20 @@ services:
             - '@insta_parser.operation.subscribers.get_info.subscriber.data_extractor.json_from_html'
 
     insta_parser.operation.subscribers.get_info.subscriber.data_extractor.json_from_html:
-        class: InstaParserBundle\DataExtractor\RegExp
+        class: Pizzamanblabla\DataTransformerBundle\DataExtractor\RegExp
         arguments:
-            - '@insta_parser.operation.subscribers.get_info.subscriber.data_extractor.payload_modifier.json'
+            - '@pizzamanblabla.data_transformer.payload_modifier.json'
             - '@insta_parser.operation.subscribers.get_info.subscriber.sanitizer'
             - '/{".+;/ui'
 
     insta_parser.operation.subscribers.get_info.subscriber.sanitizer:
-        class: InstaParserBundle\Internal\Sanitizer\Sanitizer
+        class: Pizzamanblabla\DataTransformerBundle\Sanitizer\Sanitizer
         arguments:
             -
                 - ';'
 
-    insta_parser.operation.subscribers.get_info.subscriber.data_extractor.payload_modifier.json:
-        class: InstaParserBundle\PayloadModifier\Json
-
     insta_parser.operation.subscribers.get_info.subscriber.response_factory:
         class: InstaParserBundle\Operation\Subscriber\GetInfo\Dto\Response\SuccessfulResponseFactory
+
+    insta_parser.operation.subscribers.get_info.subscriber.request_factory:
+        class: InstaParserBundle\Interaction\Dto\Request\SubscriberRequestFactory

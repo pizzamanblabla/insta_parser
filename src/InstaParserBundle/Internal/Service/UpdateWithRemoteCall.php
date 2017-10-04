@@ -1,0 +1,57 @@
+<?php
+
+namespace InstaParserBundle\Internal\Service;
+
+use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
+use InstaParserBundle\Interaction\Dto\Response\EmptyInnerErroneousResponse;
+use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
+use InstaParserBundle\Interaction\RemoteCall\RemoteCallInterface;
+use InstaParserBundle\Internal\DataUpdater\DataUpdaterInterface;
+use Psr\Log\LoggerAwareTrait;
+use Throwable;
+
+final class UpdateWithRemoteCall implements ServiceInterface
+{
+    use LoggerAwareTrait;
+
+    /**
+     * @var RemoteCallInterface
+     */
+    private $remoteCall;
+
+    /**
+     * @var DataUpdaterInterface
+     */
+    private $dataUpdater;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behave(InternalRequestInterface $request): InternalResponseInterface
+    {
+        try {
+            return $this->processOperation($request);
+        } catch (Throwable $e) {
+            $this->logger->warning(substr($e->getMessage(), 0, 250));
+
+            return new EmptyInnerErroneousResponse();
+        }
+    }
+
+    /**
+     * @param InternalRequestInterface $request
+     * @return InternalResponseInterface
+     */
+    private function processOperation(InternalRequestInterface $request): InternalResponseInterface
+    {
+        $this->logger->info('Performing remote call');
+        $response = $this->remoteCall->call($request);
+
+        if ($response->getType()->isSuccessful()) {
+            $this->logger->info('Updating database with received data');
+            $this->dataUpdater->update($request, $response);
+        }
+
+        return $response;
+    }
+}

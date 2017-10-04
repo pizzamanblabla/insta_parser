@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Operation\Post\Update\Dto;
+namespace InstaParserBundle\Operation\Post\Update\Dto\Request;
 
 use InstaParserBundle\Entity\Post;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;

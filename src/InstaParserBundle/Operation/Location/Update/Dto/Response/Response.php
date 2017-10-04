@@ -1,11 +1,11 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistics\Update\Collection\Dto\Response;
+namespace InstaParserBundle\Operation\Location\Update\Dto\Response;
 
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Interaction\Dto\Response\Successful;
 
-class SuccessfulResponse implements InternalResponseInterface
+class Response implements InternalResponseInterface
 {
     use Successful;
 }

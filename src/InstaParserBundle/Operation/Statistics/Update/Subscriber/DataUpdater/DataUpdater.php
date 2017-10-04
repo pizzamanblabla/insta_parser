@@ -1,84 +1,39 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistics\Update\Collection\Service;
+namespace InstaParserBundle\Operation\Statistic\Suscriber\DataUpdater;
 
 use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
 use InstaParserBundle\Entity\Brand;
 use InstaParserBundle\Entity\Mention;
-use InstaParserBundle\Entity\Repository\FactoryInterface;
+use InstaParserBundle\Entity\Post;
 use InstaParserBundle\Entity\Subscriber;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
-use InstaParserBundle\Interaction\Dto\Response\EmptyInnerSuccessfulResponse;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Interaction\Enum\UpdateStatus;
-use InstaParserBundle\Internal\Service\BaseEntityService;
-use InstaParserBundle\Internal\Service\ServiceInterface;
-use InstaParserBundle\Operation\Statistics\Update\Collection\Dto\Request\Request;
-use InstaParserBundle\Operation\Statistics\Update\Subscriber\Dto\Request\Request as SubscriberRequest;
+use InstaParserBundle\Internal\DataUpdater\BaseDataUpdater;
+use InstaParserBundle\Operation\Statistics\Update\Subscriber\Dto\Request\Request;
+use InstaParserBundle\Operation\Statistics\Update\Subscriber\Dto\Response\Publication;
 use InstaParserBundle\Operation\Statistics\Update\Subscriber\Dto\Response\SuccessfulResponse;
-use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerInterface;
 
-final class Service extends BaseEntityService
+final class DataUpdater extends BaseDataUpdater
 {
-    use LoggerAwareTrait;
-
     /**
-     * @var ServiceInterface
-     */
-    private $decoratedService;
-
-    /**
-     * @param ServiceInterface $decoratedService
-     * @param EntityManagerInterface $entityManager
-     * @param FactoryInterface $repositoryFactory
-     * @param LoggerInterface $logger
-     */
-    public function __construct(
-        ServiceInterface $decoratedService,
-        EntityManagerInterface $entityManager,
-        FactoryInterface $repositoryFactory,
-        LoggerInterface $logger
-    ) {
-        parent::__construct($entityManager, $repositoryFactory, $logger);
-
-        $this->setLogger($logger);
-
-        $this->decoratedService = $decoratedService;
-    }
-
-    /**
-     * {@inheritdoc}
      * @param InternalRequestInterface|Request $request
+     * @param InternalResponseInterface|SuccessfulResponse $response
+     * @return void
      */
-    public function behave(InternalRequestInterface $request): InternalResponseInterface
+    public function update(InternalRequestInterface $request, InternalResponseInterface $response)
     {
-        foreach ($request->getSubscribers() as $subscriber) {
-            $response = $this->decoratedService->behave($this->createInternalRequest($subscriber));
+        if (!$response->getType()->isSuccessful()) {
+            $request->getSubscriber()->setStatus(UpdateStatus::FAILED);
+        } else {
+            $request->getSubscriber()
+                ->setStatus(UpdateStatus::READY)
+                ->setUpdatedAt(new DateTime())
+            ;
 
-            if (!$response->getType()->isSuccessful()) {
-                $subscriber->setStatus(UpdateStatus::FAILED);
-            } else {
-                $subscriber
-                    ->setStatus(UpdateStatus::READY)
-                    ->setUpdatedAt(new DateTime())
-                ;
-
-                $this->updateMentions($response, $subscriber);
-            }
+            $this->updateMentions($response, $request->getSubscriber());
         }
-
-        return new EmptyInnerSuccessfulResponse();
-    }
-
-    /**
-     * @param Subscriber $subscriber
-     * @return SubscriberRequest
-     */
-    private function createInternalRequest(Subscriber $subscriber): SubscriberRequest
-    {
-        return (new SubscriberRequest())->setSubscriber($subscriber);
     }
 
     /**
@@ -92,6 +47,7 @@ final class Service extends BaseEntityService
         foreach ($response->getPublications() as $publication) {
             if (!empty($publication->getCaption())) {
                 $brands = $this->findBrands($publication->getCaption());
+                $post = $this->updatePost($publication, $subscriber);
 
                 foreach ($brands as $brandName) {
                     $brand = $this->getOrCreateBrand($brandName);
@@ -102,7 +58,8 @@ final class Service extends BaseEntityService
                         $this->updateMention(
                             (new DateTime())->modify('@' . $publication->getTimestamp()),
                             $brand,
-                            $subscriber
+                            $subscriber,
+                            $post
                         );
                     }
                 }
@@ -141,17 +98,36 @@ final class Service extends BaseEntityService
     }
 
     /**
+     * @param Publication $publication
+     * @param Subscriber $subscriber
+     * @return Post
+     */
+    private function updatePost(Publication $publication, Subscriber $subscriber): Post
+    {
+        if (!$this->repositoryFactory->post()->findOneByCode($publication->getCode())) {
+            $mention = (new Post())
+                ->setCode($publication->getCode())
+                ->setDate((new DateTime())->modify('@' . $publication->getTimestamp()))
+            ;
+
+            $this->entityManager->persist($mention);
+            $this->entityManager->flush();
+        }
+    }
+
+    /**
      * @param DateTime $date
      * @param Brand $brand
      * @param Subscriber $subscriber
      * @return void
      */
-    private function updateMention(DateTime $date, Brand $brand, Subscriber $subscriber)
+    private function updateMention(DateTime $date, Brand $brand, Subscriber $subscriber, Post $post)
     {
         if (!$this->repositoryFactory->mention()->findOneByDateAndBrandAndSubscriber($date, $brand, $subscriber)) {
             $mention = (new Mention())
                 ->setBrand($brand)
                 ->setSubscriber($subscriber)
+                ->setPost($post)
                 ->setDate($date)
             ;
 

@@ -7,13 +7,13 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleTor\Middleware;
-use InstaParserBundle\DataExtractor\DataExtractorInterface;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Interaction\RequestAssembler\RequestAssemblerInterface;
 use InstaParserBundle\Interaction\Response\ResponseFactoryInterface;
 use InstaParserBundle\Internal\ObjectBuilder\Exception\InvalidObjectException;
 use InstaParserBundle\Internal\ObjectBuilder\ObjectBuilderInterface;
+use Pizzamanblabla\DataTransformerBundle\DataExtractor\DataExtractorInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -83,7 +83,7 @@ final class RemoteCall implements RemoteCallInterface
     /**
      * {@inheritdoc}
      */
-    public function call(InternalRequestInterface $request)
+    public function call(InternalRequestInterface $request): InternalResponseInterface
     {
         $this->logger->info('Trying to build http request');
         $httpRequest = $this->requestAssembler->assemble($request);

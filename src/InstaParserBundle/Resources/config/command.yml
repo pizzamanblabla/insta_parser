@@ -25,3 +25,21 @@ services:
             - '@logger'
         tags:
             - { name: console.command }
+
+    insta_parser.command.location.update:
+        class: InstaParserBundle\Command\Location\Update
+        arguments:
+            - '@insta_parser.operation.statistic.update.lock_subscribers'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+        tags:
+            - { name: console.command }
+
+    insta_parser.command.post.update:
+        class: InstaParserBundle\Command\Post\Update
+        arguments:
+            - '@insta_parser.operation.statistic.update.lock_subscribers'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+        tags:
+            - { name: console.command }

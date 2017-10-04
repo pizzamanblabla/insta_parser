@@ -2,8 +2,8 @@
 
 namespace InstaParserBundle\DataExtractor\Response;
 
-use InstaParserBundle\DataExtractor\Exception\WrongInputFormatException;
-use InstaParserBundle\DataExtractor\DataExtractorInterface;
+use Pizzamanblabla\DataTransformerBundle\DataExtractor\DataExtractorInterface;
+use Pizzamanblabla\DataTransformerBundle\DataExtractor\Exception\DataExtractionException;
 use Psr\Http\Message\ResponseInterface;
 
 final class Content implements DataExtractorInterface
@@ -24,10 +24,10 @@ final class Content implements DataExtractorInterface
     /**
      * {@inheritdoc}
      */
-    public function extract($extractable)
+    public function extract($extractable): array
     {
         if (!($extractable instanceof ResponseInterface)) {
-            throw new WrongInputFormatException();
+            throw new DataExtractionException();
         }
         /** @var ResponseInterface $extractable */
 
