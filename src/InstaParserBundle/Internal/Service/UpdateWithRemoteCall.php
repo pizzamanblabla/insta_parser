@@ -8,6 +8,7 @@ use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Interaction\RemoteCall\RemoteCallInterface;
 use InstaParserBundle\Internal\DataUpdater\DataUpdaterInterface;
 use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 final class UpdateWithRemoteCall implements ServiceInterface
@@ -23,6 +24,19 @@ final class UpdateWithRemoteCall implements ServiceInterface
      * @var DataUpdaterInterface
      */
     private $dataUpdater;
+
+    /**
+     * @param RemoteCallInterface $remoteCall
+     * @param DataUpdaterInterface $dataUpdater
+     * @param LoggerInterface $logger
+     */
+    public function __construct(RemoteCallInterface $remoteCall, DataUpdaterInterface $dataUpdater, LoggerInterface $logger)
+    {
+        $this->setLogger($logger);
+
+        $this->remoteCall = $remoteCall;
+        $this->dataUpdater = $dataUpdater;
+    }
 
     /**
      * {@inheritdoc}

@@ -3,8 +3,8 @@
 namespace InstaParserBundle\Command\Subscriber;
 
 use InstaParserBundle\Command\BaseUpdateCommand;
+use InstaParserBundle\Interaction\Dto\Request\CollectionRequest;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
-use InstaParserBundle\Interaction\Dto\Request\SubscribersRequest;
 use Symfony\Component\Console\Input\InputInterface;
 
 final class GetInfo extends BaseUpdateCommand
@@ -28,8 +28,8 @@ final class GetInfo extends BaseUpdateCommand
     protected function createRequest(InputInterface $input): InternalRequestInterface
     {
         return
-            (new SubscribersRequest())
-                ->setSubscribers(
+            (new CollectionRequest())
+                ->setCollection(
                     $this->repositoryFactory->subscriber()->findAllAWithoutContactInfo(self::UPDATE_LIMIT)
                 );
     }

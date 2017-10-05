@@ -100,7 +100,7 @@ services:
         class: InstaParserBundle\Operation\Statistics\Update\Subscriber\Dto\Response\SuccessfulResponseFactory
 
     insta_parser.operation.statistic.subscriber.data_updater:
-        class: InstaParserBundle\Operation\Statistic\Suscriber\DataUpdater\DataUpdater
+        class: InstaParserBundle\Operation\Statistics\Update\Subscriber\DataUpdater\DataUpdater
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@insta_parser.repository_factory'

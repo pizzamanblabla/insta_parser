@@ -5,8 +5,8 @@ namespace InstaParserBundle\Internal\Service\Subscribers;
 use Doctrine\ORM\EntityManagerInterface;
 use InstaParserBundle\Entity\Repository\FactoryInterface;
 use InstaParserBundle\Entity\Subscriber;
+use InstaParserBundle\Interaction\Dto\Request\CollectionRequest;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
-use InstaParserBundle\Interaction\Dto\Request\SubscribersRequest;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Interaction\Enum\UpdateStatus;
 use InstaParserBundle\Internal\Service\BaseEntityService;
@@ -39,12 +39,12 @@ final class Lock extends BaseEntityService
 
     /**
      * {@inheritdoc}
-     * @param InternalRequestInterface|SubscribersRequest $request
+     * @param InternalRequestInterface|CollectionRequest $request
      */
     public function behave(InternalRequestInterface $request): InternalResponseInterface
     {
         $this->logger->info('Locking subscribers');
-        $this->setSubscriberStatus($request->getSubscribers(), UpdateStatus::inProgress());
+        $this->setSubscriberStatus($request->getCollection(), UpdateStatus::inProgress());
 
         $response = $this->service->behave($request);
 

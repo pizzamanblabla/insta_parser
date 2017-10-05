@@ -70,7 +70,7 @@ final class ProcessCollection implements ServiceInterface
         return
             call_user_func(
                 [$this->requestFactory->createRequest(), $this->method],
-                [$element]
+                $element
             );
     }
 }

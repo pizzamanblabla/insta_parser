@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityRepository;
 
 /**
  * @method findOneByName(string $name)
+ * @method findOneByCode(string $code)
  */
 final class Post extends EntityRepository
 {
