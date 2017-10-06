@@ -19,6 +19,7 @@ services:
         arguments:
             - '@insta_parser.operation.location.update.remote_call'
             - '@insta_parser.operation.location.update.data_updater'
+            - '@insta_parser.common.data_updater.exceptional.blank'
             - '@logger'
 
     insta_parser.operation.location.update.data_updater:
@@ -42,35 +43,15 @@ services:
     insta_parser.operation.location.update.request_assembler:
         class: InstaParserBundle\Operation\Location\Update\Assembler\Assembler
         arguments:
-            - ''
-            - ''
+            - 'https://www.instagram.com/explore/locations/'
+            - 'GET'
 
     insta_parser.operation.location.update.data_extractor:
         class: Pizzamanblabla\DataTransformerBundle\DataExtractor\SearchNodes
         arguments:
-            - '@insta_parser.operation.location.update.data_extractor.http_response_to_array'
+            - '@insta_parser.common.data_extractor.http_response_to_array'
             -
-                - 'biography'
-                - 'followed_by'
-                - 'follows'
-
-    insta_parser.operation.location.update.data_extractor.http_response_to_array:
-        class: InstaParserBundle\DataExtractor\Response\Content
-        arguments:
-            - '@insta_parser.operation.location.update.data_extractor.json_from_html'
-
-    insta_parser.operation.location.update.data_extractor.json_from_html:
-        class: Pizzamanblabla\DataTransformerBundle\DataExtractor\RegExp
-        arguments:
-            - '@pizzamanblabla.data_transformer.payload_modifier.json'
-            - '@insta_parser.operation.location.update.subscriber.sanitizer'
-            - '/{".+;/ui'
-
-    insta_parser.operation.location.update.subscriber.sanitizer:
-        class: Pizzamanblabla\DataTransformerBundle\Sanitizer\Sanitizer
-        arguments:
-            -
-                - ';'
+                - 'location'
 
     insta_parser.operation.location.update.response_factory:
         class: InstaParserBundle\Operation\Location\Update\Dto\Response\ResponseFactory

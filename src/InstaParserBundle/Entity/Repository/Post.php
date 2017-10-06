@@ -21,8 +21,9 @@ final class Post extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('p');
 
         $queryBuilder
-            ->where('p.location is NULL')
+            ->where('p.type is NULL')
             ->setMaxResults($limit)
+            ->orderBy('p.id', 'ASC')
         ;
 
         return $queryBuilder->getQuery()->getResult();

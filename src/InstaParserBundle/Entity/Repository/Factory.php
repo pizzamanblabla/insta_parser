@@ -66,7 +66,7 @@ final class Factory implements FactoryInterface
     /**
      * @return Post
      */
-    public function Post(): Post
+    public function post(): Post
     {
         return $this->entityManager->getRepository(Entity\Post::class);
     }

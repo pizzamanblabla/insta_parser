@@ -30,9 +30,9 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(name="code", type="string", length=256, nullable=false)
+     * @ORM\Column(name="type", type="string", length=128, nullable=true)
      */
-    private $link;
+    private $type;
 
     /**
      * @var Subscriber
@@ -64,7 +64,7 @@ class Post
      *     inverseJoinColumns={@ORM\JoinColumn(name="hashtag_id", referencedColumnName="id")}
      * )
      */
-    private $hashtags;
+    private $hashtags = [];
 
     /**
      * @var \DateTime
@@ -112,18 +112,18 @@ class Post
     /**
      * @return string
      */
-    public function getLink()
+    public function getType()
     {
-        return $this->link;
+        return $this->type;
     }
 
     /**
-     * @param string $link
+     * @param string $type
      * @return Post
      */
-    public function setLink($link)
+    public function setType($type)
     {
-        $this->link = $link;
+        $this->type = $type;
         return $this;
     }
 

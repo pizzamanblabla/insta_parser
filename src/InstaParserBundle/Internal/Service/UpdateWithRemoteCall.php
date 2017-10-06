@@ -7,6 +7,7 @@ use InstaParserBundle\Interaction\Dto\Response\EmptyInnerErroneousResponse;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Interaction\RemoteCall\RemoteCallInterface;
 use InstaParserBundle\Internal\DataUpdater\DataUpdaterInterface;
+use InstaParserBundle\Internal\DataUpdater\Exceptional\ExceptionalDataUpdaterInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -26,16 +27,27 @@ final class UpdateWithRemoteCall implements ServiceInterface
     private $dataUpdater;
 
     /**
+     * @var ExceptionalDataUpdaterInterface
+     */
+    private $exceptionalDataUpdater;
+
+    /**
      * @param RemoteCallInterface $remoteCall
      * @param DataUpdaterInterface $dataUpdater
+     * @param ExceptionalDataUpdaterInterface $exceptionalDataUpdater
      * @param LoggerInterface $logger
      */
-    public function __construct(RemoteCallInterface $remoteCall, DataUpdaterInterface $dataUpdater, LoggerInterface $logger)
-    {
+    public function __construct(
+        RemoteCallInterface $remoteCall,
+        DataUpdaterInterface $dataUpdater,
+        ExceptionalDataUpdaterInterface $exceptionalDataUpdater,
+        LoggerInterface $logger
+    ) {
         $this->setLogger($logger);
 
         $this->remoteCall = $remoteCall;
         $this->dataUpdater = $dataUpdater;
+        $this->exceptionalDataUpdater = $exceptionalDataUpdater;
     }
 
     /**
@@ -47,6 +59,7 @@ final class UpdateWithRemoteCall implements ServiceInterface
             return $this->processOperation($request);
         } catch (Throwable $e) {
             $this->logger->warning(substr($e->getMessage(), 0, 250));
+            $this->exceptionalDataUpdater->update($request);
 
             return new EmptyInnerErroneousResponse();
         }

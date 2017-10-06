@@ -29,9 +29,9 @@ SQL
             CREATE TABLE post(
                 id SERIAL NOT NULL PRIMARY KEY,
                 code CHARACTER VARYING(128) NOT NULL,
-                link CHARACTER VARYING(256) NOT NULL,
+                type CHARACTER VARYING(128) DEFAULT NULL,
                 subscriber_id INTEGER NOT NULL,
-                location_id INTEGER NOT NULL,
+                location_id INTEGER DEFAULT NULL,
                 date TIMESTAMPTZ NOT NULL DEFAULT current_timestamp
             );
 SQL
@@ -58,9 +58,10 @@ SQL
         $this->addSql(<<<SQL
             CREATE TABLE location(
                 id SERIAL NOT NULL PRIMARY KEY,
-                name CHARACTER VARYING(128) NOT NULL,
-                lat FLOAT NOT NULL,
-                long FLOAT NOT NULL
+                name CHARACTER VARYING(256) NOT NULL,
+                code CHARACTER VARYING(128) NOT NULL,
+                lat FLOAT DEFAULT NULL,
+                long FLOAT DEFAULT NULL
             );
 SQL
         );

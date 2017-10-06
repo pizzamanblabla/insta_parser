@@ -32,5 +32,5 @@ interface FactoryInterface
     /**
      * @return Post
      */
-    public function Post(): Post;
+    public function post(): Post;
 }

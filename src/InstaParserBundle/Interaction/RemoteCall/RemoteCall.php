@@ -88,19 +88,19 @@ final class RemoteCall implements RemoteCallInterface
         $this->logger->info('Trying to build http request');
         $httpRequest = $this->requestAssembler->assemble($request);
 
-        $this->logger->info('Sending remote request');
-        $httpResponse = $this->setUpClient()->send($httpRequest);
-
-        $this->logger->info('Extracting data from http response');
-        $extracted = $this->dataExtractor->extract($httpResponse);
-
-        if (!count($extracted)) {
+//        $this->logger->info('Sending remote request');
+//        $httpResponse = $this->setUpClient()->send($httpRequest);
+//
+//        $this->logger->info('Extracting data from http response');
+//        $extracted = $this->dataExtractor->extract($httpResponse);
+//
+//        if (!count($extracted)) {
             $this->logger->info('Failed. Sending unmasked remote request');
             $httpResponse = $this->client->send($httpRequest);
 
             $this->logger->info('Extracting data from http response');
             $extracted = $this->dataExtractor->extract($httpResponse);
-        }
+        //}
 
         $this->logger->info('Building internal request');
         return $this->buildInternalRequest($extracted);

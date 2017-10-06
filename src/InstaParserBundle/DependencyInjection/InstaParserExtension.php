@@ -30,7 +30,10 @@ class InstaParserExtension extends Extension
     private function getConfigurationList()
     {
         return [
+            'location/update.yml',
+            'post/update.yml',
             'subscriber/get_info.yml',
+            'common.yml',
             'command.yml',
             'controller.yml',
             'services.yml',

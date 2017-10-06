@@ -31,9 +31,6 @@ final class Content implements DataExtractorInterface
         }
         /** @var ResponseInterface $extractable */
 
-        return
-            $this->decoratedDataExtractor->extract(
-                $extractable->getBody()->getContents()
-            );
+        return $this->decoratedDataExtractor->extract($extractable->getBody()->getContents());
     }
 }

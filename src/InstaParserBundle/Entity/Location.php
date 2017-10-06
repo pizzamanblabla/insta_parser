@@ -28,6 +28,13 @@ class Location
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=128, nullable=false)
+     */
+    private $code;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="lat", type="float", precision=10, scale=0, nullable=false)
@@ -74,6 +81,24 @@ class Location
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     * @return Location
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
         return $this;
     }
 

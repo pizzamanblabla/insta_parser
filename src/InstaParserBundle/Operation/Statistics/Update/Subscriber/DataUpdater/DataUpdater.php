@@ -1,9 +1,10 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistic\Suscriber\DataUpdater;
+namespace InstaParserBundle\Operation\Statistics\Update\Subscriber\DataUpdater;
 
 use DateTime;
 use InstaParserBundle\Entity\Brand;
+use InstaParserBundle\Entity\Hashtag;
 use InstaParserBundle\Entity\Mention;
 use InstaParserBundle\Entity\Post;
 use InstaParserBundle\Entity\Subscriber;
@@ -79,6 +80,17 @@ final class DataUpdater extends BaseDataUpdater
     }
 
     /**
+     * @param string $caption
+     * @return string[]
+     */
+    private function findHashtags(string $caption): array
+    {
+        $result = preg_match_all('/\B(\#[a-zA-Zа-яА-Я]+\b)(?!;)/ui', $caption, $match);
+
+        return $result ? $match[0] : [];
+    }
+
+    /**
      * @param string $name
      * @return Brand
      */
@@ -98,27 +110,63 @@ final class DataUpdater extends BaseDataUpdater
     }
 
     /**
+     * @param string $name
+     * @return Hashtag
+     */
+    private function getOrCreateHashtag(string $name): Hashtag
+    {
+        $name = trim($name, '.');
+        $hashtag = $this->repositoryFactory->hashtag()->findOneByName($name);
+
+        if (!$hashtag) {
+            $hashtag = (new Hashtag())->setName($name);
+
+            $this->entityManager->persist($hashtag);
+            $this->entityManager->flush();
+        }
+
+        return $hashtag;
+    }
+
+    /**
      * @param Publication $publication
      * @param Subscriber $subscriber
      * @return Post
      */
     private function updatePost(Publication $publication, Subscriber $subscriber): Post
     {
-        if (!$this->repositoryFactory->post()->findOneByCode($publication->getCode())) {
-            $mention = (new Post())
+        $post = $this->repositoryFactory->post()->findOneByCode($publication->getCode());
+
+        if (!$post) {
+            $post = (new Post())
                 ->setCode($publication->getCode())
                 ->setDate((new DateTime())->modify('@' . $publication->getTimestamp()))
+                ->setSubscriber($subscriber)
+                ->setLink('https://www.instagram.com/p/' . $publication->getCode())
             ;
 
-            $this->entityManager->persist($mention);
+            $this->entityManager->persist($post);
             $this->entityManager->flush();
         }
+
+        $hashtags = $this->findHashtags($publication->getCaption());
+
+        $hashtagEntities = [];
+
+        foreach ($hashtags as $hashtagName) {
+            $hashtagEntities[] = $this->getOrCreateHashtag($hashtagName);
+        }
+
+        $post->setHashtags(array_merge(count($post->getHashtags()) ? $post->getHashtags() : [], $hashtagEntities));
+
+        return $post;
     }
 
     /**
      * @param DateTime $date
      * @param Brand $brand
      * @param Subscriber $subscriber
+     * @param Post $post
      * @return void
      */
     private function updateMention(DateTime $date, Brand $brand, Subscriber $subscriber, Post $post)

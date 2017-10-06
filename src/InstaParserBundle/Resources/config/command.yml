@@ -29,7 +29,7 @@ services:
     insta_parser.command.location.update:
         class: InstaParserBundle\Command\Location\Update
         arguments:
-            - '@insta_parser.operation.statistic.update.lock_subscribers'
+            - '@insta_parser.operation.location.update.transactional'
             - '@insta_parser.repository_factory'
             - '@logger'
         tags:
@@ -38,7 +38,7 @@ services:
     insta_parser.command.post.update:
         class: InstaParserBundle\Command\Post\Update
         arguments:
-            - '@insta_parser.operation.statistic.update.lock_subscribers'
+            - '@insta_parser.operation.post.update.transactional'
             - '@insta_parser.repository_factory'
             - '@logger'
         tags:

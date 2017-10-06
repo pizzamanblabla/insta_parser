@@ -27,6 +27,7 @@ services:
         arguments:
             - '@insta_parser.operation.subscribers.get_info.subscriber.remote_call'
             - '@insta_parser.operation.subscribers.get_info.data_updater'
+            - '@insta_parser.common.data_updater.exceptional.blank'
             - '@logger'
 
     insta_parser.operation.subscribers.get_info.data_updater:
@@ -53,29 +54,11 @@ services:
     insta_parser.operation.subscribers.get_info.subscriber.data_extractor:
         class: Pizzamanblabla\DataTransformerBundle\DataExtractor\SearchNodes
         arguments:
-            - '@insta_parser.operation.subscribers.get_info.subscriber.data_extractor.http_response_to_array'
+            - '@insta_parser.common.data_extractor.http_response_to_array'
             -
                 - 'biography'
                 - 'followed_by'
                 - 'follows'
-
-    insta_parser.operation.subscribers.get_info.subscriber.data_extractor.http_response_to_array:
-        class: InstaParserBundle\DataExtractor\Response\Content
-        arguments:
-            - '@insta_parser.operation.subscribers.get_info.subscriber.data_extractor.json_from_html'
-
-    insta_parser.operation.subscribers.get_info.subscriber.data_extractor.json_from_html:
-        class: Pizzamanblabla\DataTransformerBundle\DataExtractor\RegExp
-        arguments:
-            - '@pizzamanblabla.data_transformer.payload_modifier.json'
-            - '@insta_parser.operation.subscribers.get_info.subscriber.sanitizer'
-            - '/{".+;/ui'
-
-    insta_parser.operation.subscribers.get_info.subscriber.sanitizer:
-        class: Pizzamanblabla\DataTransformerBundle\Sanitizer\Sanitizer
-        arguments:
-            -
-                - ';'
 
     insta_parser.operation.subscribers.get_info.subscriber.response_factory:
         class: InstaParserBundle\Operation\Subscriber\GetInfo\Dto\Response\SuccessfulResponseFactory

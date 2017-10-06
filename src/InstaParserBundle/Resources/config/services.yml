@@ -55,6 +55,7 @@ services:
         arguments:
             - '@insta_parser.operation.statistic.subscriber.update.remote_call'
             - '@insta_parser.operation.statistic.subscriber.data_updater'
+            - '@insta_parser.common.data_updater.exceptional.blank'
             - '@logger'
 
     insta_parser.operation.statistic.subscriber.update.remote_call:
@@ -72,29 +73,11 @@ services:
         class: InstaParserBundle\Operation\Statistics\Update\Subscriber\Assembler\Assembler
 
     insta_parser.operation.statistic.subscriber.update.data_extractor:
-        class: Pizzamanblabla\DataTransformerBundle\DataExtractor\SearchNodes
+        class: Pizzamanblabla\DataTransformerBundle\DataExtractor\SearchNodesChain
         arguments:
-            - '@insta_parser.operation.statistic.subscriber.update.data_extractor.http_response_to_array'
+            - '@insta_parser.common.data_extractor.http_response_to_array'
             -
-                - 'nodes'
-
-    insta_parser.operation.statistic.subscriber.update.data_extractor.http_response_to_array:
-        class: InstaParserBundle\DataExtractor\Response\Content
-        arguments:
-            - '@insta_parser.operation.statistic.subscriber.update.data_extractor.json_from_html'
-
-    insta_parser.operation.statistic.subscriber.update.data_extractor.json_from_html:
-        class: Pizzamanblabla\DataTransformerBundle\DataExtractor\RegExp
-        arguments:
-            - '@pizzamanblabla.data_transformer.payload_modifier.json'
-            - '@insta_parser.operation.statistic.subscriber.update.sanitizer'
-            - '/{".+;/ui'
-
-    insta_parser.operation.statistic.subscriber.update.sanitizer:
-        class: Pizzamanblabla\DataTransformerBundle\Sanitizer\Sanitizer
-        arguments:
-            -
-                - ';'
+                media: 'nodes'
 
     insta_parser.operation.statistic.subscriber.update.response_factory:
         class: InstaParserBundle\Operation\Statistics\Update\Subscriber\Dto\Response\SuccessfulResponseFactory
@@ -104,21 +87,4 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@insta_parser.repository_factory'
-            - '@logger'
-
-    #Repository Factory
-    insta_parser.repository_factory:
-        class: InstaParserBundle\Entity\Repository\Factory
-        arguments:
-            - '@doctrine.orm.entity_manager'
-
-    #Http client
-    guzzle.client:
-        class: GuzzleHttp\Client
-
-    #Object builder
-    insta_parser.jms.object_builder:
-        class: InstaParserBundle\Internal\ObjectBuilder\JMSObjectBuilder
-        arguments:
-            - '@jms_serializer'
             - '@logger'
