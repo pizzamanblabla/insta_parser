@@ -142,7 +142,6 @@ final class DataUpdater extends BaseDataUpdater
                 ->setCode($publication->getCode())
                 ->setDate((new DateTime())->modify('@' . $publication->getTimestamp()))
                 ->setSubscriber($subscriber)
-                ->setLink('https://www.instagram.com/p/' . $publication->getCode())
             ;
 
             $this->entityManager->persist($post);
