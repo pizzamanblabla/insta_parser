@@ -8,7 +8,8 @@ interface ExceptionalDataUpdaterInterface
 {
     /**
      * @param InternalRequestInterface $request
+     * @param string $errorMessage
      * @return void
      */
-    public function update(InternalRequestInterface $request);
+    public function update(InternalRequestInterface $request, string $errorMessage);
 }

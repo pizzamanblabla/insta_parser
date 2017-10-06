@@ -59,7 +59,7 @@ final class UpdateWithRemoteCall implements ServiceInterface
             return $this->processOperation($request);
         } catch (Throwable $e) {
             $this->logger->warning(substr($e->getMessage(), 0, 250));
-            $this->exceptionalDataUpdater->update($request);
+            $this->exceptionalDataUpdater->update($request,$e->getMessage());
 
             return new EmptyInnerErroneousResponse();
         }

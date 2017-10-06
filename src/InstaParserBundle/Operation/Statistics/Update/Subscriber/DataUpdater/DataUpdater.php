@@ -156,7 +156,14 @@ final class DataUpdater extends BaseDataUpdater
             $hashtagEntities[] = $this->getOrCreateHashtag($hashtagName);
         }
 
-        $post->setHashtags(array_merge(count($post->getHashtags()) ? $post->getHashtags() : [], $hashtagEntities));
+        $post->setHashtags(
+            array_merge(
+                is_array($post->getHashtags()) && count($post->getHashtags())
+                    ? $post->getHashtags()
+                    : [],
+                $hashtagEntities
+            )
+        );
 
         return $post;
     }

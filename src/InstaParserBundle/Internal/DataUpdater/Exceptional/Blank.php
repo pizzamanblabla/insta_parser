@@ -9,7 +9,7 @@ final class Blank implements ExceptionalDataUpdaterInterface
     /**
      * {@inheritdoc}
      */
-    public function update(InternalRequestInterface $request)
+    public function update(InternalRequestInterface $request, string $errorMessage)
     {
         /*_*/
     }
