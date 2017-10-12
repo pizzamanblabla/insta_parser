@@ -5,7 +5,7 @@ namespace InstaParserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="Location")
+ * @ORM\Table(name="location")
  * @ORM\Entity(repositoryClass="InstaParserBundle\Entity\Repository\Location")
  */
 class Location

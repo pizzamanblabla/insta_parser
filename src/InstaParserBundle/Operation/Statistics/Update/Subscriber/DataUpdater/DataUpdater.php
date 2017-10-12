@@ -9,17 +9,17 @@ use InstaParserBundle\Entity\Mention;
 use InstaParserBundle\Entity\Post;
 use InstaParserBundle\Entity\Subscriber;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
+use InstaParserBundle\Interaction\Dto\Request\SubscriberRequest;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Interaction\Enum\UpdateStatus;
 use InstaParserBundle\Internal\DataUpdater\BaseDataUpdater;
-use InstaParserBundle\Operation\Statistics\Update\Subscriber\Dto\Request\Request;
 use InstaParserBundle\Operation\Statistics\Update\Subscriber\Dto\Response\Publication;
 use InstaParserBundle\Operation\Statistics\Update\Subscriber\Dto\Response\SuccessfulResponse;
 
 final class DataUpdater extends BaseDataUpdater
 {
     /**
-     * @param InternalRequestInterface|Request $request
+     * @param InternalRequestInterface|SubscriberRequest $request
      * @param InternalResponseInterface|SuccessfulResponse $response
      * @return void
      */

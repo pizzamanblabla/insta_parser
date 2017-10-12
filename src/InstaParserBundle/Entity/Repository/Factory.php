@@ -70,4 +70,12 @@ final class Factory implements FactoryInterface
     {
         return $this->entityManager->getRepository(Entity\Post::class);
     }
+
+    /**
+     * @return Tag
+     */
+    public function tag(): Tag
+    {
+        return $this->entityManager->getRepository(Entity\Tag::class);
+    }
 }

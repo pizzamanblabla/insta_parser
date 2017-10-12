@@ -1,16 +1,15 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistics\Update\Subscriber\DataUpdater\Exceptional;
+namespace InstaParserBundle\Internal\DataUpdater\Exceptional;;
 
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Interaction\Enum\UpdateStatus;
-use InstaParserBundle\Internal\DataUpdater\Exceptional\BaseDataUpdater;
-use InstaParserBundle\Operation\Statistics\Update\Subscriber\Dto\Request\Request;
+use InstaParserBundle\Interaction\Dto\Request\SubscriberRequest;
 
-final class DataUpdater extends BaseDataUpdater
+final class SubscriberDataUpdater extends BaseDataUpdater
 {
     /**
-     * @param InternalRequestInterface|Request $request
+     * @param InternalRequestInterface|SubscriberRequest $request
      * @param string $errorMessage
      * @return void
      */

@@ -38,3 +38,10 @@ services:
     #Data Updater
     insta_parser.common.data_updater.exceptional.blank:
         class: InstaParserBundle\Internal\DataUpdater\Exceptional\Blank
+
+    insta_parser.common.data_updater.exceptional.subscriber:
+        class: InstaParserBundle\Internal\DataUpdater\Exceptional\SubscriberDataUpdater
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@insta_parser.repository_factory'
+            - '@logger'

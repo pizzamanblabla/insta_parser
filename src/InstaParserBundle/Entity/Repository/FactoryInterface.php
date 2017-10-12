@@ -33,4 +33,9 @@ interface FactoryInterface
      * @return Post
      */
     public function post(): Post;
+
+    /**
+     * @return Tag
+     */
+    public function tag(): Tag;
 }

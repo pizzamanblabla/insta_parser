@@ -13,6 +13,13 @@ services:
             - '@insta_parser.repository_factory'
             - '@logger'
 
+    insta_parser.operation.statistic.get.hashtag.service:
+        class: InstaParserBundle\Operation\Statistics\Get\Hashtag\Service\Service
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+
     insta_parser.operation.subscriber.add.transactional:
         class: InstaParserBundle\Internal\Service\Transactional
         arguments:
@@ -55,7 +62,7 @@ services:
         arguments:
             - '@insta_parser.operation.statistic.subscriber.update.remote_call'
             - '@insta_parser.operation.statistic.subscriber.data_updater'
-            - '@insta_parser.operation.statistic.subscriber.data_updater.exceptional'
+            - '@insta_parser.common.data_updater.exceptional.subscriber'
             - '@logger'
 
     insta_parser.operation.statistic.subscriber.update.remote_call:
@@ -84,13 +91,6 @@ services:
 
     insta_parser.operation.statistic.subscriber.data_updater:
         class: InstaParserBundle\Operation\Statistics\Update\Subscriber\DataUpdater\DataUpdater
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@insta_parser.repository_factory'
-            - '@logger'
-
-    insta_parser.operation.statistic.subscriber.data_updater.exceptional:
-        class: InstaParserBundle\Operation\Statistics\Update\Subscriber\DataUpdater\Exceptional\DataUpdater
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@insta_parser.repository_factory'

@@ -5,7 +5,7 @@ namespace InstaParserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="Post")
+ * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="InstaParserBundle\Entity\Repository\Post")
  */
 class Post

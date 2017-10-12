@@ -26,16 +26,27 @@ final class StatisticController extends Controller
     private $topService;
 
     /**
+     * @var ServiceInterface
+     */
+    private $hashtagService;
+
+    /**
      * @param ContainerInterface $container
      * @param ServiceInterface $brandService
      * @param ServiceInterface $topService
+     * @param ServiceInterface $hashtagService
      */
-    public function __construct(ContainerInterface $container, ServiceInterface $brandService, ServiceInterface $topService)
-    {
+    public function __construct(
+        ContainerInterface $container,
+        ServiceInterface $brandService,
+        ServiceInterface $topService,
+        ServiceInterface $hashtagService
+    ) {
         $this->setContainer($container);
 
         $this->brandService = $brandService;
         $this->topService = $topService;
+        $this->hashtagService = $hashtagService;
     }
 
     /**
@@ -61,6 +72,24 @@ final class StatisticController extends Controller
      * @return Response
      */
     public function getTopAction()
+    {
+        $response = $this->topService->behave(new EmptyInternalRequest());
+        /* @var TopSuccessfulResponse $response  */
+
+        return
+            $this->render(
+                'InstaParserBundle:Statistic:top.html.twig',
+                [
+                    'topBloggers' => $response->getTopSubscribers(),
+                    'topBrands' => $response->getTopBrands(),
+                ]
+            );
+    }
+
+    /**
+     * @return Response
+     */
+    public function getHashtagAction()
     {
         $response = $this->topService->behave(new EmptyInternalRequest());
         /* @var TopSuccessfulResponse $response  */

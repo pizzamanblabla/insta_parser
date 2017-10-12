@@ -6,6 +6,7 @@ use InstaParserBundle\Command\BaseUpdateCommand;
 use InstaParserBundle\Interaction\Dto\Request\CollectionRequest;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 final class Update extends BaseUpdateCommand
 {
@@ -19,6 +20,13 @@ final class Update extends BaseUpdateCommand
         $this
             ->setName('post:update')
             ->setDescription('Updating')
+            ->addOption(
+                'tag',
+                '-t',
+                InputOption::VALUE_OPTIONAL,
+                'Who do you want to update?',
+                ''
+            )
         ;
     }
 
@@ -30,7 +38,12 @@ final class Update extends BaseUpdateCommand
         return
             (new CollectionRequest())
                 ->setCollection(
-                    $this->repositoryFactory->post()->findAllWithoutData(self::UPDATE_LIMIT)
+                    !empty($input->getOption('tag'))
+                        ? $this->repositoryFactory->post()->findAllWithoutData(self::UPDATE_LIMIT)
+                        : $this->repositoryFactory->post()->findAllWithoutDataAndTag(
+                            self::UPDATE_LIMIT,
+                            $this->repositoryFactory->tag()->findOneByType($input->getOption('tag'))
+                        )
                 );
     }
 }

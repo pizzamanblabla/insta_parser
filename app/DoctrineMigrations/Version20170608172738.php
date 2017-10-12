@@ -68,12 +68,12 @@ class Version20170608172738 extends AbstractMigration
     public function down(Schema $schema)
     {
         $this->addSql(<<<SQL
-            DELETE FROM subscriber WHERE 1;
+            DELETE FROM subscriber;
 SQL
         );
 
         $this->addSql(<<<SQL
-            DELETE FROM mention WHERE 1;
+            DELETE FROM mention;
 SQL
         );
     }

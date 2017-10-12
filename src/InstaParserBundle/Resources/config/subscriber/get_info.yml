@@ -27,7 +27,7 @@ services:
         arguments:
             - '@insta_parser.operation.subscribers.get_info.subscriber.remote_call'
             - '@insta_parser.operation.subscribers.get_info.data_updater'
-            - '@insta_parser.common.data_updater.exceptional.blank'
+            - '@insta_parser.common.data_updater.exceptional.subscriber'
             - '@logger'
 
     insta_parser.operation.subscribers.get_info.data_updater:

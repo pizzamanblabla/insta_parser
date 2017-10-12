@@ -78,6 +78,46 @@ class Subscriber
     private $updatedAt;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="real_name", type="string", length=256, nullable=true)
+     */
+    private $realName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="location", type="string", length=256, nullable=true)
+     */
+    private $location;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="work", type="string", length=256, nullable=true)
+     */
+    private $work;
+
+    /**
+     * @var Tag[]
+     *
+     * @ORM\ManyToMany(targetEntity="Tag", orphanRemoval=true)
+     * @ORM\JoinTable(
+     *     name="subscriber_tag",
+     *     joinColumns={@ORM\JoinColumn(name="subscriber_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
+     * )
+     */
+    private $tags = [];
+
+    /**
+     * @var Post[]
+     *
+     * * @ORM\OneToMany(targetEntity="Post", mappedBy="subscriber")
+     */
+    private $posts = [];
+
+    /**
      * @return int
      */
     public function getId()
@@ -236,6 +276,96 @@ class Subscriber
     public function setUpdatedAt(DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRealName()
+    {
+        return $this->realName;
+    }
+
+    /**
+     * @param string $realName
+     * @return Subscriber
+     */
+    public function setRealName($realName)
+    {
+        $this->realName = $realName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param string $location
+     * @return Subscriber
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWork()
+    {
+        return $this->work;
+    }
+
+    /**
+     * @param string $work
+     * @return Subscriber
+     */
+    public function setWork($work)
+    {
+        $this->work = $work;
+        return $this;
+    }
+
+    /**
+     * @return Tag[]
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param Tag[] $tags
+     * @return Subscriber
+     */
+    public function setTags(array $tags)
+    {
+        $this->tags = $tags;
+        return $this;
+    }
+
+    /**
+     * @return Post[]
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    /**
+     * @param Post[] $posts
+     * @return Subscriber
+     */
+    public function setPosts($posts)
+    {
+        $this->posts = $posts;
         return $this;
     }
 }

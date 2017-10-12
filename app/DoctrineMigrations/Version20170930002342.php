@@ -76,6 +76,40 @@ SQL
 SQL
         );
 
+        $this->addSql(<<<SQL
+            ALTER TABLE subscriber 
+            ADD COLUMN real_name CHARACTER VARYING(256) DEFAULT NULL,
+            ADD COLUMN location CHARACTER VARYING(256) DEFAULT NULL,
+            ADD COLUMN work CHARACTER VARYING(256) DEFAULT NULL
+SQL
+        );
+
+        $this->addSql(<<<SQL
+            CREATE TABLE tag(
+                id SERIAL NOT NULL PRIMARY KEY,
+                type CHARACTER VARYING(256) NOT NULL
+            );
+SQL
+        );
+
+        $this->addSql(<<<SQL
+            CREATE INDEX type_tag_idx ON tag (type);
+SQL
+        );
+
+        $this->addSql(<<<SQL
+            CREATE TABLE subscriber_tag(
+                subscriber_id INTEGER NOT NULL,
+                tag_id INTEGER NOT NULL
+            );
+SQL
+        );
+
+        $this->addSql(<<<SQL
+            CREATE INDEX subscriber_tag_idx ON subscriber_tag (subscriber_id, tag_id);
+SQL
+        );
+
     }
 
     /**
@@ -87,9 +121,19 @@ SQL
         $schema->dropTable('post');
         $schema->dropTable('location');
         $schema->dropTable('post_hashtag');
+        $schema->dropTable('tag');
+        $schema->dropTable('subscriber_tag');
 
         $this->addSql(<<<SQL
             ALTER TABLE mention DROP COLUMN post_id;
+SQL
+        );
+
+        $this->addSql(<<<SQL
+            ALTER TABLE subscriber 
+            DROP COLUMN real_name, 
+            DROP COLUMN location, 
+            DROP COLUMN work;
 SQL
         );
     }
