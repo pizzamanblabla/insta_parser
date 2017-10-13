@@ -42,6 +42,16 @@ class Mention
     private $brand;
 
     /**
+     * @var Post
+     *
+     * @ORM\ManyToOne(targetEntity="Post")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     * })
+     */
+    private $post;
+
+    /**
      * @var DateTime
      *
      * @ORM\Column(type="datetime", name="date", nullable=false)
@@ -99,6 +109,24 @@ class Mention
     public function setBrand(Brand $brand)
     {
         $this->brand = $brand;
+        return $this;
+    }
+
+    /**
+     * @return Post
+     */
+    public function getPost()
+    {
+        return $this->post;
+    }
+
+    /**
+     * @param Post $post
+     * @return Mention
+     */
+    public function setPost(Post $post)
+    {
+        $this->post = $post;
         return $this;
     }
 

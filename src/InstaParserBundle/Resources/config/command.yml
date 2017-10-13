@@ -7,6 +7,16 @@ services:
         tags:
             - { name: console.command }
 
+
+    insta_parser.command.subscriber.get_info:
+        class: InstaParserBundle\Command\Subscriber\GetInfo
+        arguments:
+            - '@insta_parser.operation.subscribers.get_info.lock_subscribers'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+        tags:
+            - { name: console.command }
+
     insta_parser.command.parse:
         class: InstaParserBundle\Command\Mention\Update
         arguments:
@@ -14,4 +24,22 @@ services:
             - '@insta_parser.repository_factory'
             - '@logger'
         tags:
-                - { name: console.command }
+            - { name: console.command }
+
+    insta_parser.command.location.update:
+        class: InstaParserBundle\Command\Location\Update
+        arguments:
+            - '@insta_parser.operation.location.update.transactional'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+        tags:
+            - { name: console.command }
+
+    insta_parser.command.post.update:
+        class: InstaParserBundle\Command\Post\Update
+        arguments:
+            - '@insta_parser.operation.post.update.transactional'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+        tags:
+            - { name: console.command }

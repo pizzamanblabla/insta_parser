@@ -2,37 +2,14 @@
 
 namespace InstaParserBundle\Command\Mention;
 
-use InstaParserBundle\Command\BaseOperationCommand;
-use InstaParserBundle\Entity\Repository\FactoryInterface;
+use InstaParserBundle\Command\BaseUpdateCommand;
+use InstaParserBundle\Interaction\Dto\Request\CollectionRequest;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
-use InstaParserBundle\Internal\Service\ServiceInterface;
-use InstaParserBundle\Operation\Statistics\Update\Collection\Dto\Request\Request;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 
-final class Update extends BaseOperationCommand
+final class Update extends BaseUpdateCommand
 {
     const UPDATE_LIMIT = 500;
-
-    /**
-     * @var FactoryInterface
-     */
-    private $repositoryFactory;
-
-    /**
-     * @param ServiceInterface $service
-     * @param FactoryInterface $repositoryFactory
-     * @param LoggerInterface $logger
-     */
-    public function __construct(
-        ServiceInterface $service,
-        FactoryInterface $repositoryFactory,
-        LoggerInterface $logger
-    ) {
-        parent::__construct($service, $logger);
-
-        $this->repositoryFactory = $repositoryFactory;
-    }
 
     /**
      * {@inheritdoc}
@@ -51,8 +28,8 @@ final class Update extends BaseOperationCommand
     protected function createRequest(InputInterface $input): InternalRequestInterface
     {
         return
-            (new Request())
-                ->setSubscribers(
+            (new CollectionRequest())
+                ->setCollection(
                     $this->repositoryFactory->subscriber()->findAllAvailableWithLimit(self::UPDATE_LIMIT)
                 );
     }

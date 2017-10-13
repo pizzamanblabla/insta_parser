@@ -12,3 +12,8 @@ controller.statistic.top:
     path: '/top'
     defaults: { _controller: insta_parser.controller.statistic.mentions:getTopAction, security: false }
     methods: [GET]
+
+controller.statistic.hashtags:
+    path: '/hashtags'
+    defaults: { _controller: insta_parser.controller.statistic.mentions:getHashtagAction, security: false }
+    methods: [GET]

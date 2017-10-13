@@ -1,1 +1,1 @@
-*/15 * * * * www-data ./bin/console mention:update >> /var/www/var/logs/dev.log
+5 * * * * www-data ./bin/console mention:update >> /var/www/var/logs/dev.log

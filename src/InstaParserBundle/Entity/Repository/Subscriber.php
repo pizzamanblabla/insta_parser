@@ -34,6 +34,51 @@ final class Subscriber extends EntityRepository
      * @param int $limit
      * @return Entity\Subscriber[]
      */
+    public function findAllAWithoutContactInfo(int $limit)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+
+        $queryBuilder
+            ->where('s.status=:status')
+            ->setParameter('status', UpdateStatus::READY)
+            ->andWhere('s.email is NULL')
+            ->andWhere('s.subscribers is NULL')
+            ->andWhere('s.subscriptions is NULL')
+            ->orderBy('s.updatedAt', 'ASC')
+            ->setMaxResults($limit)
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $limit
+     * @param Entity\Tag $tag
+     * @return Entity\Post[]
+     */
+    public function findAllWithoutDataAndTag(int $limit, Entity\Tag $tag)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+
+        $queryBuilder
+            ->join('s.tags', 't')
+            ->where('s.status=:status')
+            ->setParameter('status', UpdateStatus::READY)
+            ->andWhere('s.email is NULL')
+            ->andWhere('s.subscribers is NULL')
+            ->andWhere('s.subscriptions is NULL')
+            ->andWhere($queryBuilder->expr()->eq('t.id', $tag->getId()))
+            ->orderBy('s.updatedAt', 'ASC')
+            ->setMaxResults($limit)
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $limit
+     * @return Entity\Subscriber[]
+     */
     public function findTopWithLimit(int $limit)
     {
         $queryBuilder = $this->createQueryBuilder('s');

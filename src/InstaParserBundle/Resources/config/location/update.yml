@@ -1,0 +1,60 @@
+services:
+    insta_parser.operation.location.update.transactional:
+        class: InstaParserBundle\Internal\Service\Transactional
+        arguments:
+            - '@insta_parser.operation.location.update.collection.service'
+            - '@doctrine.orm.entity_manager'
+            - '@logger'
+
+    insta_parser.operation.location.update.collection.service:
+        class: InstaParserBundle\Internal\Service\ProcessCollection
+        arguments:
+            - '@insta_parser.operation.location.update.service'
+            - '@insta_parser.operation.location.update.request_factory'
+            - 'setLocation'
+            - '@logger'
+
+    insta_parser.operation.location.update.service:
+        class: InstaParserBundle\Internal\Service\UpdateWithRemoteCall
+        arguments:
+            - '@insta_parser.operation.location.update.remote_call'
+            - '@insta_parser.operation.location.update.data_updater'
+            - '@insta_parser.common.data_updater.exceptional.blank'
+            - '@logger'
+
+    insta_parser.operation.location.update.data_updater:
+        class: InstaParserBundle\Operation\Location\Update\DataUpdater\DataUpdater
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+
+    insta_parser.operation.location.update.remote_call:
+        class: InstaParserBundle\Interaction\RemoteCall\RemoteCall
+        arguments:
+            - '@insta_parser.operation.location.update.request_assembler'
+            - '@guzzle.client'
+            - '@insta_parser.operation.location.update.data_extractor'
+            - '@insta_parser.jms.object_builder'
+            - '@insta_parser.operation.location.update.response_factory'
+            - '@validator'
+            - '@logger'
+
+    insta_parser.operation.location.update.request_assembler:
+        class: InstaParserBundle\Operation\Location\Update\Assembler\Assembler
+        arguments:
+            - 'https://www.instagram.com/explore/locations/'
+            - 'GET'
+
+    insta_parser.operation.location.update.data_extractor:
+        class: Pizzamanblabla\DataTransformerBundle\DataExtractor\SearchNodes
+        arguments:
+            - '@insta_parser.common.data_extractor.http_response_to_array'
+            -
+                - 'location'
+
+    insta_parser.operation.location.update.response_factory:
+        class: InstaParserBundle\Operation\Location\Update\Dto\Response\ResponseFactory
+
+    insta_parser.operation.location.update.request_factory:
+        class: InstaParserBundle\Operation\Location\Update\Dto\Request\RequestFactory

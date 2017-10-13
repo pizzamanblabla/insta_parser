@@ -2,15 +2,11 @@
 
 namespace InstaParserBundle\Operation\Statistics\Update\Subscriber\Dto\Response;
 
-use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
-use InstaParserBundle\Interaction\Dto\Response\Successful;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class Publication implements InternalResponseInterface
+class Publication
 {
-    use Successful;
-
     /**
      * @var string
      *

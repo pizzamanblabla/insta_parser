@@ -2,14 +2,18 @@
 
 namespace InstaParserBundle\Interaction\RemoteCall;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use InstaParserBundle\DataExtractor\DataExtractorInterface;
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleTor\Middleware;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Interaction\RequestAssembler\RequestAssemblerInterface;
 use InstaParserBundle\Interaction\Response\ResponseFactoryInterface;
 use InstaParserBundle\Internal\ObjectBuilder\Exception\InvalidObjectException;
 use InstaParserBundle\Internal\ObjectBuilder\ObjectBuilderInterface;
+use Pizzamanblabla\DataTransformerBundle\DataExtractor\DataExtractorInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -79,16 +83,24 @@ final class RemoteCall implements RemoteCallInterface
     /**
      * {@inheritdoc}
      */
-    public function call(InternalRequestInterface $request)
+    public function call(InternalRequestInterface $request): InternalResponseInterface
     {
         $this->logger->info('Trying to build http request');
         $httpRequest = $this->requestAssembler->assemble($request);
 
         $this->logger->info('Sending remote request');
-        $httpResponse = $this->client->send($httpRequest);
+        $httpResponse = $this->setUpClient()->send($httpRequest);
 
         $this->logger->info('Extracting data from http response');
         $extracted = $this->dataExtractor->extract($httpResponse);
+
+        if (!count($extracted)) {
+            $this->logger->info('Failed. Sending unmasked remote request');
+            $httpResponse = $this->client->send($httpRequest);
+
+            $this->logger->info('Extracting data from http response');
+            $extracted = $this->dataExtractor->extract($httpResponse);
+        }
 
         $this->logger->info('Building internal request');
         return $this->buildInternalRequest($extracted);
@@ -113,5 +125,17 @@ final class RemoteCall implements RemoteCallInterface
         }
 
         return $response;
+    }
+
+    /**
+     * @return Client
+     */
+    private function setUpClient()
+    {
+        $stack = new HandlerStack();
+        $stack->setHandler(new CurlHandler());
+        $stack->push(Middleware::tor());
+
+        return new Client(['handler' => $stack]);
     }
 }

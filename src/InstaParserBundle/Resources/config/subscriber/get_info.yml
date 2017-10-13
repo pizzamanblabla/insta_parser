@@ -1,0 +1,67 @@
+services:
+    insta_parser.operation.subscribers.get_info.lock_subscribers:
+        class: InstaParserBundle\Internal\Service\Subscribers\Lock
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@insta_parser.repository_factory'
+            - '@insta_parser.operation.subscribers.get_info.transactional'
+            - '@logger'
+
+    insta_parser.operation.subscribers.get_info.transactional:
+        class: InstaParserBundle\Internal\Service\Transactional
+        arguments:
+            - '@insta_parser.operation.subscribers.get_info.service'
+            - '@doctrine.orm.entity_manager'
+            - '@logger'
+
+    insta_parser.operation.subscribers.get_info.service:
+        class: InstaParserBundle\Internal\Service\ProcessCollection
+        arguments:
+            - '@insta_parser.operation.subscribers.get_info.subscriber.service'
+            - '@insta_parser.operation.subscribers.get_info.subscriber.request_factory'
+            - 'setSubscriber'
+            - '@logger'
+
+    insta_parser.operation.subscribers.get_info.subscriber.service:
+        class: InstaParserBundle\Internal\Service\UpdateWithRemoteCall
+        arguments:
+            - '@insta_parser.operation.subscribers.get_info.subscriber.remote_call'
+            - '@insta_parser.operation.subscribers.get_info.data_updater'
+            - '@insta_parser.common.data_updater.exceptional.subscriber'
+            - '@logger'
+
+    insta_parser.operation.subscribers.get_info.data_updater:
+        class: InstaParserBundle\Operation\Subscriber\GetInfo\DataUpdater\DataUpdater
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@insta_parser.repository_factory'
+            - '@logger'
+
+    insta_parser.operation.subscribers.get_info.subscriber.remote_call:
+        class: InstaParserBundle\Interaction\RemoteCall\RemoteCall
+        arguments:
+            - '@insta_parser.operation.subscribers.get_info.subscriber.request_assembler'
+            - '@guzzle.client'
+            - '@insta_parser.operation.subscribers.get_info.subscriber.data_extractor'
+            - '@insta_parser.jms.object_builder'
+            - '@insta_parser.operation.subscribers.get_info.subscriber.response_factory'
+            - '@validator'
+            - '@logger'
+
+    insta_parser.operation.subscribers.get_info.subscriber.request_assembler:
+        class: InstaParserBundle\Interaction\Assembler\Subscriber\Assembler
+
+    insta_parser.operation.subscribers.get_info.subscriber.data_extractor:
+        class: Pizzamanblabla\DataTransformerBundle\DataExtractor\SearchNodes
+        arguments:
+            - '@insta_parser.common.data_extractor.http_response_to_array'
+            -
+                - 'biography'
+                - 'followed_by'
+                - 'follows'
+
+    insta_parser.operation.subscribers.get_info.subscriber.response_factory:
+        class: InstaParserBundle\Operation\Subscriber\GetInfo\Dto\Response\SuccessfulResponseFactory
+
+    insta_parser.operation.subscribers.get_info.subscriber.request_factory:
+        class: InstaParserBundle\Interaction\Dto\Request\SubscriberRequestFactory

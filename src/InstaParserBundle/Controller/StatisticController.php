@@ -7,6 +7,8 @@ use InstaParserBundle\Internal\Service\ServiceInterface;
 use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Request\Request;
 use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response\SuccessfulResponse;
 use InstaParserBundle\Operation\Statistics\Get\Top\Dto\Response\SuccessfulResponse as TopSuccessfulResponse;
+use InstaParserBundle\Operation\Statistics\Get\Hashtag\Dto\Response\SuccessfulResponse as HashtagSuccessfulResponse;
+use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,16 +28,27 @@ final class StatisticController extends Controller
     private $topService;
 
     /**
+     * @var ServiceInterface
+     */
+    private $hashtagService;
+
+    /**
      * @param ContainerInterface $container
      * @param ServiceInterface $brandService
      * @param ServiceInterface $topService
+     * @param ServiceInterface $hashtagService
      */
-    public function __construct(ContainerInterface $container, ServiceInterface $brandService, ServiceInterface $topService)
-    {
+    public function __construct(
+        ContainerInterface $container,
+        ServiceInterface $brandService,
+        ServiceInterface $topService,
+        ServiceInterface $hashtagService
+    ) {
         $this->setContainer($container);
 
         $this->brandService = $brandService;
         $this->topService = $topService;
+        $this->hashtagService = $hashtagService;
     }
 
     /**
@@ -71,6 +84,23 @@ final class StatisticController extends Controller
                 [
                     'topBloggers' => $response->getTopSubscribers(),
                     'topBrands' => $response->getTopBrands(),
+                ]
+            );
+    }
+
+    /**
+     * @return Response
+     */
+    public function getHashtagAction()
+    {
+        $response = $this->hashtagService->behave(new EmptyInternalRequest());
+        /** @var HashtagSuccessfulResponse $response  */
+
+        return
+            $this->render(
+                'InstaParserBundle:Statistic:hashtag.html.twig',
+                [
+                    'subscribers' => $response->getSubscribers(),
                 ]
             );
     }

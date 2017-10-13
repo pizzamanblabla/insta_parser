@@ -2,14 +2,14 @@
   border-top: 1px solid $black;
   padding-top: 50px;
   width: 100%;
-  .mentions {
+  .mentions, .bloggers {
     background-color: $white;
     border: 1px solid $neutral-grey;
     width: 90%;
     min-width: 800px;
     margin: auto;
     @include border-radius(3px);
-    .mention-table
+    .mention-table, .blogger-table
     {
       width: 100%;
       text-align: center;

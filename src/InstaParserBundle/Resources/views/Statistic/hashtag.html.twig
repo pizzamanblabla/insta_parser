@@ -1,0 +1,35 @@
+{% extends 'InstaParserBundle:Common:base.html.twig' %}
+{% block content %}
+    <div class="bloggers">
+        <table id="blogger-table" class="blogger-table">
+            <tr class="table-head">
+                <td>Клуб</td>
+                <td>Подразделение</td>
+                <td>Фамилия, Имя</td>
+                <td>Ссылка на аккаунт</td>
+                <td>Количество подписчиков</td>
+                <td>Посты по хештегу</td>
+                <td>Посты по метоположению</td>
+            </tr>
+            {% for subscriber in subscribers %}
+                <tr>
+                    <td>{{ subscriber.location }}</td>
+                    <td>{{ subscriber.work }}</td>
+                    <td>{{ subscriber.name }}</td>
+                    <td><a href="{{ subscriber.link }}" target="_blank">Ссылка на аккаунт</a></td>
+                    <td>{{ subscriber.subscribers }}</td>
+                    <td>
+                        {% for post in subscriber.hashtagPosts %}
+                            <a href="https://www.instagram.com/p/{{ post.link }}" target="_blank">{{ post.hashtag }}</a>,
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for post in subscriber.locationPosts %}
+                            <a href="https://www.instagram.com/p/{{ post.link }}" target="_blank">{{ post.location.name }}</a>,
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

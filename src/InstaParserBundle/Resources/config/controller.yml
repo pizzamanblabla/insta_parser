@@ -5,3 +5,4 @@ services:
             - '@service_container'
             - '@insta_parser.operation.statistic.get.brands.service'
             - '@insta_parser.operation.statistic.get.top.service'
+            - '@insta_parser.operation.statistic.get.hashtag.service'

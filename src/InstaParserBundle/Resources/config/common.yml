@@ -1,0 +1,47 @@
+services:
+    #Repository Factory
+    insta_parser.repository_factory:
+        class: InstaParserBundle\Entity\Repository\Factory
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    #Http client
+    guzzle.client:
+        class: GuzzleHttp\Client
+
+    #Object builder
+    insta_parser.jms.object_builder:
+        class: InstaParserBundle\Internal\ObjectBuilder\JMSObjectBuilder
+        arguments:
+            - '@jms_serializer'
+            - '@logger'
+
+    #Data Extractors
+    insta_parser.common.data_extractor.http_response_to_array:
+        class: InstaParserBundle\DataExtractor\Response\Content
+        arguments:
+            - '@insta_parser.common.data_extractor.json_from_html'
+
+    insta_parser.common.data_extractor.json_from_html:
+        class: Pizzamanblabla\DataTransformerBundle\DataExtractor\RegExp
+        arguments:
+            - '@pizzamanblabla.data_transformer.payload_modifier.json'
+            - '@insta_parser.common.sanitizer'
+            - '/{".+;/ui'
+
+    insta_parser.common.sanitizer:
+        class: Pizzamanblabla\DataTransformerBundle\Sanitizer\Sanitizer
+        arguments:
+            -
+                - ';'
+
+    #Data Updater
+    insta_parser.common.data_updater.exceptional.blank:
+        class: InstaParserBundle\Internal\DataUpdater\Exceptional\Blank
+
+    insta_parser.common.data_updater.exceptional.subscriber:
+        class: InstaParserBundle\Internal\DataUpdater\Exceptional\SubscriberDataUpdater
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@insta_parser.repository_factory'
+            - '@logger'
