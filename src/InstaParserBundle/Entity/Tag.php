@@ -16,7 +16,7 @@ class Tag
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="brand_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\SequenceGenerator(sequenceName="tag_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
