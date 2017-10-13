@@ -18,6 +18,10 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@insta_parser.repository_factory'
+            -
+                - '#яworldclass'
+                - '#worldclassclubs'
+            - '%insta_parser.clubs_locations%'
             - '@logger'
 
     insta_parser.operation.subscriber.add.transactional:

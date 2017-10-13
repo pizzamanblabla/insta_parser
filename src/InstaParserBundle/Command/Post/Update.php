@@ -38,7 +38,7 @@ final class Update extends BaseUpdateCommand
         return
             (new CollectionRequest())
                 ->setCollection(
-                    !empty($input->getOption('tag'))
+                    empty($input->getOption('tag'))
                         ? $this->repositoryFactory->post()->findAllWithoutData(self::UPDATE_LIMIT)
                         : $this->repositoryFactory->post()->findAllWithoutDataAndTag(
                             self::UPDATE_LIMIT,

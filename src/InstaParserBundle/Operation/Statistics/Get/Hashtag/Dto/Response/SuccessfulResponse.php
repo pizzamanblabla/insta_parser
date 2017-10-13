@@ -10,25 +10,25 @@ class SuccessfulResponse implements InternalResponseInterface
     use Successful;
 
     /**
-     * @var array
+     * @var Subscriber[]
      */
-    private $tag;
+    private $subscribers = [];
 
     /**
-     * @return array
+     * @return Subscriber[]
      */
-    public function getTag(): array
+    public function getSubscribers()
     {
-        return $this->tag;
+        return $this->subscribers;
     }
 
     /**
-     * @param array $tag
+     * @param Subscriber[] $subscribers
      * @return SuccessfulResponse
      */
-    public function setTag(array $tag): SuccessfulResponse
+    public function setSubscribers(array $subscribers)
     {
-        $this->tag = $tag;
+        $this->subscribers = $subscribers;
         return $this;
     }
 }
