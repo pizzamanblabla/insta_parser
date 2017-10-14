@@ -81,6 +81,7 @@ final class Brand extends EntityRepository
             ->having('count(s.id) >= :limit')
             ->setParameter('limit', $limit)
             ->setFirstResult($offset)
+            ->setMaxResults($step)
             ->orderBy('subscriberCount', 'DESC')
         ;
 
