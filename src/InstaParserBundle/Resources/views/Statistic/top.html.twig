@@ -1,6 +1,7 @@
 {% extends 'InstaParserBundle:Common:base.html.twig' %}
 {% block content %}
     <div class="tops">
+        {% include 'InstaParserBundle:Statistic:pagination.html.twig' %}
         <div class="top">
             <p>Top Блоги</p>
             <ul>
@@ -19,5 +20,6 @@
             </ul>
         </div>
         <div class="clear"></div>
+        {% include 'InstaParserBundle:Statistic:pagination.html.twig' %}
     </div>
 {% endblock %}

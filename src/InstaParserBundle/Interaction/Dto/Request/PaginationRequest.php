@@ -1,10 +1,8 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Request;
+namespace InstaParserBundle\Interaction\Dto\Request;
 
-use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
-
-class Request implements InternalRequestInterface
+class PaginationRequest implements InternalRequestInterface
 {
     /**
      * @var int
@@ -26,7 +24,7 @@ class Request implements InternalRequestInterface
 
     /**
      * @param int $page
-     * @return Request
+     * @return PaginationRequest
      */
     public function setPage($page)
     {
@@ -44,7 +42,7 @@ class Request implements InternalRequestInterface
 
     /**
      * @param int $step
-     * @return Request
+     * @return PaginationRequest
      */
     public function setStep($step)
     {

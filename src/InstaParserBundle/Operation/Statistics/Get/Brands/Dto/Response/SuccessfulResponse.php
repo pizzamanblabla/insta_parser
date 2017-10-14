@@ -2,6 +2,7 @@
 
 namespace InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response;
 
+use InstaParserBundle\Interaction\Dto\Pagination;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Interaction\Dto\Response\Successful;
 

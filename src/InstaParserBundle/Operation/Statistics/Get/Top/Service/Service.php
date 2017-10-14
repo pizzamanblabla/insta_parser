@@ -2,7 +2,9 @@
 
 namespace InstaParserBundle\Operation\Statistics\Get\Top\Service;
 
+use InstaParserBundle\Interaction\Dto\Pagination;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
+use InstaParserBundle\Interaction\Dto\Request\PaginationRequest;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Internal\Service\BaseEntityService;
 use InstaParserBundle\Operation\Statistics\Get\Top\Dto\Response\TopBrand;
@@ -15,18 +17,19 @@ final class Service extends BaseEntityService
 
     /**
      * {@inheritdoc}
+     * @param InternalRequestInterface|PaginationRequest $request
      */
     public function behave(InternalRequestInterface $request): InternalResponseInterface
     {
         $topSubscribers = [];
 
-        foreach ($this->repositoryFactory->subscriber()->findTopUntilLimit(self::TOP_MIN_COUNT) as $topSubscriber) {
+        foreach ($this->repositoryFactory->subscriber()->findTopUntilLimit(self::TOP_MIN_COUNT, $request->getPage(), $request->getStep()) as $topSubscriber) {
             $topSubscribers[] = $this->createTopSubscriber($topSubscriber);
         }
 
         $topBrands = [];
 
-        foreach ($this->repositoryFactory->brand()->findTopUntilLimit(self::TOP_MIN_COUNT) as $topBrand) {
+        foreach ($this->repositoryFactory->brand()->findTopUntilLimit(self::TOP_MIN_COUNT, $request->getPage(), $request->getStep()) as $topBrand) {
             $topBrands[] = $this->createTopBrand($topBrand);
         }
 
@@ -34,6 +37,7 @@ final class Service extends BaseEntityService
             (new SuccessfulResponse())
                 ->setTopSubscribers($topSubscribers)
                 ->setTopBrands($topBrands)
+                ->setPagination($this->createPagination($request))
             ;
     }
 
@@ -60,6 +64,25 @@ final class Service extends BaseEntityService
             (new TopBrand())
                 ->setBrand($data[0])
                 ->setSubscriberCount($data['subscriberCount'])
+            ;
+    }
+
+    /**
+     * @param InternalRequestInterface|PaginationRequest $request
+     * @return Pagination
+     */
+    private function createPagination(InternalRequestInterface $request): Pagination
+    {
+        $last = ceil($this->repositoryFactory->brand()->getCountWithLimit(self::TOP_MIN_COUNT)[0]['brands'] / $request->getStep());
+        $lastSubscriber = ceil($this->repositoryFactory->subscriber()->getCountWithLimit(self::TOP_MIN_COUNT)[0]['subscribers'] / $request->getStep());
+
+        $last = $lastSubscriber > $last ? $lastSubscriber : $last;
+
+        return
+            (new Pagination())
+                ->setCurrent($request->getPage())
+                ->setPaginationList($request->getPage(), $last)
+                ->setLast($last)
             ;
     }
 }

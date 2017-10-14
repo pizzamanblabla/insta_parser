@@ -16,7 +16,9 @@
                     <td>{{ subscriber.location }}</td>
                     <td>{{ subscriber.work }}</td>
                     <td>{{ subscriber.name }}</td>
-                    <td><a href="{{ subscriber.link }}" target="_blank">Ссылка на аккаунт</a></td>
+                    <td>
+                        <a href="{{ subscriber.link }}" target="_blank">Ссылка</a>
+                    </td>
                     <td>{{ subscriber.subscribers }}</td>
                     <td>
                         {% for post in subscriber.hashtagPosts %}

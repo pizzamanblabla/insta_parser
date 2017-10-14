@@ -3,12 +3,11 @@
 namespace InstaParserBundle\Controller;
 
 use InstaParserBundle\Interaction\Dto\Request\EmptyInternalRequest;
+use InstaParserBundle\Interaction\Dto\Request\PaginationRequest;
 use InstaParserBundle\Internal\Service\ServiceInterface;
-use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Request\Request;
 use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response\SuccessfulResponse;
-use InstaParserBundle\Operation\Statistics\Get\Top\Dto\Response\SuccessfulResponse as TopSuccessfulResponse;
 use InstaParserBundle\Operation\Statistics\Get\Hashtag\Dto\Response\SuccessfulResponse as HashtagSuccessfulResponse;
-use JMS\Serializer\SerializerInterface;
+use InstaParserBundle\Operation\Statistics\Get\Top\Dto\Response\SuccessfulResponse as TopSuccessfulResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,16 +65,18 @@ final class StatisticController extends Controller
                 [
                     'statistics' => $response->getStatistic(),
                     'pagination' => $response->getPagination(),
+                    'pageType' => 'brand',
                 ]
             );
     }
 
     /**
+     * @param int $page
      * @return Response
      */
-    public function getTopAction()
+    public function getTopAction($page = 1)
     {
-        $response = $this->topService->behave(new EmptyInternalRequest());
+        $response = $this->topService->behave($this->createRequest($page));
         /* @var TopSuccessfulResponse $response  */
 
         return
@@ -84,6 +85,8 @@ final class StatisticController extends Controller
                 [
                     'topBloggers' => $response->getTopSubscribers(),
                     'topBrands' => $response->getTopBrands(),
+                    'pagination' => $response->getPagination(),
+                    'pageType' => 'top',
                 ]
             );
     }
@@ -107,12 +110,12 @@ final class StatisticController extends Controller
 
     /**
      * @param int $page
-     * @return Request
+     * @return PaginationRequest
      */
     private function createRequest(int $page)
     {
         return
-            (new Request())
+            (new PaginationRequest())
                 ->setPage($page)
                 ->setStep(self::STEP)
             ;

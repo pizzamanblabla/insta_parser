@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response;
+namespace InstaParserBundle\Interaction\Dto;
 
 class Pagination
 {
@@ -70,6 +70,26 @@ class Pagination
     public function setList(array $list)
     {
         $this->list = $list;
+        return $this;
+    }
+
+    /**
+     * @param int $current
+     * @param int $last
+     * @return Pagination
+     */
+    public function setPaginationList(int $current, int $last)
+    {
+        $this->list = [];
+
+        for ($i = -2; $i < 3; $i++) {
+            $element = $current + $i;
+
+            if ($element > 0 && $element <= $last) {
+                $this->list[] = $element;
+            }
+        }
+
         return $this;
     }
 }

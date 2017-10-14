@@ -6,12 +6,12 @@ use DateTime;
 use InstaParserBundle\Entity\Brand;
 use InstaParserBundle\Entity\Mention;
 use InstaParserBundle\Entity\Subscriber;
+use InstaParserBundle\Interaction\Dto\Pagination;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
+use InstaParserBundle\Interaction\Dto\Request\PaginationRequest;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use InstaParserBundle\Internal\Service\BaseEntityService;
-use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Request\Request;
 use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response\BloggersCount;
-use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response\Pagination;
 use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response\StatisticElement;
 use InstaParserBundle\Operation\Statistics\Get\Brands\Dto\Response\SuccessfulResponse;
 
@@ -20,7 +20,7 @@ final class Service extends BaseEntityService
     const TOP_COUNT = 20;
 
     /**
-     * @param InternalRequestInterface|Request $request
+     * @param InternalRequestInterface|PaginationRequest $request
      * @return InternalResponseInterface
      */
     public function behave(InternalRequestInterface $request): InternalResponseInterface
@@ -122,7 +122,7 @@ final class Service extends BaseEntityService
     }
 
     /**
-     * @param InternalRequestInterface|Request $request
+     * @param InternalRequestInterface|PaginationRequest $request
      * @return Pagination
      */
     private function createPagination(InternalRequestInterface $request): Pagination
@@ -132,28 +132,8 @@ final class Service extends BaseEntityService
         return
             (new Pagination())
                 ->setCurrent($request->getPage())
-                ->setList($this->getPaginationList($request->getPage(),$last))
+                ->setPaginationList($request->getPage(), $last)
                 ->setLast($last)
             ;
-    }
-
-    /**
-     * @param int $current
-     * @param int $last
-     * @return array
-     */
-    private function getPaginationList(int $current, int $last): array
-    {
-        $list = [];
-
-        for ($i = -2; $i < 3; $i++) {
-            $element = $current + $i;
-
-            if ($element > 0 && $element <= $last) {
-                $list[] = $element;
-            }
-        }
-
-        return $list;
     }
 }
