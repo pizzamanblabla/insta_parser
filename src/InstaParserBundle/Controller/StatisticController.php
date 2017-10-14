@@ -104,6 +104,7 @@ final class StatisticController extends Controller
                 'InstaParserBundle:Statistic:hashtag.html.twig',
                 [
                     'subscribers' => $response->getSubscribers(),
+                    'facebookSubscribers' => json_decode(file_get_contents(__DIR__ . '/../../../facebook.json'), 1),
                 ]
             );
     }
