@@ -13,7 +13,7 @@ use InstaParserBundle\Operation\Statistics\Get\Top\Dto\Response\SuccessfulRespon
 
 final class Service extends BaseEntityService
 {
-    const TOP_MIN_COUNT = 5;
+    const TOP_MIN_COUNT = 20;
 
     /**
      * {@inheritdoc}
@@ -73,10 +73,10 @@ final class Service extends BaseEntityService
      */
     private function createPagination(InternalRequestInterface $request): Pagination
     {
-        $last = ceil($this->repositoryFactory->brand()->getCountWithLimit(self::TOP_MIN_COUNT)[0]['brands'] / $request->getStep());
-        $lastSubscriber = ceil($this->repositoryFactory->subscriber()->getCountWithLimit(self::TOP_MIN_COUNT)[0]['subscribers'] / $request->getStep());
+        //$last = ceil($this->repositoryFactory->brand()->getCountWithLimit(self::TOP_MIN_COUNT)[0]['brands'] / $request->getStep());
+        //$lastSubscriber = ceil($this->repositoryFactory->subscriber()->getCountWithLimit(self::TOP_MIN_COUNT)[0]['subscribers'] / $request->getStep());
 
-        $last = $lastSubscriber > $last ? $lastSubscriber : $last;
+        $last = 200;
 
         return
             (new Pagination())
