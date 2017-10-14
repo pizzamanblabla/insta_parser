@@ -29,6 +29,7 @@ final class Brand extends EntityRepository
             ->leftJoin('m.subscriber', 's')
             ->groupBy('b.id')
             ->setFirstResult($offset)
+            ->setMaxResults($step)
             ->orderBy('subscriberCount', 'DESC')
         ;
         return

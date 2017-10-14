@@ -96,7 +96,7 @@ final class Subscriber extends EntityRepository
     }
 
     /**
-     * @param int $limit
+     * @param int $step
      * @param int $page
      * @param int $limit
      * @return Entity\Subscriber[]
@@ -114,7 +114,9 @@ final class Subscriber extends EntityRepository
             ->groupBy('s.id')
             ->having('count(b.id) >= :limit')
             ->setParameter('limit', $limit)
+            ->setMaxResults($step)
             ->setFirstResult($offset)
+
             ->orderBy('brandCount', 'DESC')
         ;
 
