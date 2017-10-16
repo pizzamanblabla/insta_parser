@@ -21,14 +21,27 @@
                     </td>
                     <td>{{ subscriber.subscribers }}</td>
                     <td>
-                        {% for post in subscriber.hashtagPosts %}
-                            <a href="https://www.instagram.com/p/{{ post.link }}" target="_blank">{{ post.hashtag }}</a>,
-                        {% endfor %}
+                        <table class="blogger-table">
+                            {% for post in subscriber.hashtagPosts %}
+                            <tr>
+                                <td>
+                                    <a href="https://www.instagram.com/p/{{ post.link }}" target="_blank">{{ post.hashtag }}</a> - https://www.instagram.com/p/{{ post.link }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
                     </td>
                     <td>
-                        {% for post in subscriber.locationPosts %}
-                            <a href="https://www.instagram.com/p/{{ post.link }}" target="_blank">{{ post.location.name }}</a>,
-                        {% endfor %}
+                        <table class="blogger-table">
+                            {% for post in subscriber.locationPosts %}
+                            <tr>
+                                <td>
+                                    <a href="https://www.instagram.com/p/{{ post.link }}" target="_blank">{{ post.location.name }}</a> - https://www.instagram.com/p/{{ post.link }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </table>
                     </td>
                 </tr>
             {% endfor %}
