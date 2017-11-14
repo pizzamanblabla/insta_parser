@@ -13,32 +13,36 @@
             </tr>
             {% for subscriber in subscribers %}
                 <tr>
-                    <td>{{ subscriber.location }}</td>
-                    <td>{{ subscriber.work }}</td>
-                    <td>{{ subscriber.name }}</td>
-                    <td>
+                    <td rowspan="2">{{ subscriber.location }}</td>
+                    <td rowspan="2">{{ subscriber.work }}</td>
+                    <td rowspan="2">{{ subscriber.name }}</td>
+                    <td rowspan="2">
                         <a href="{{ subscriber.link }}" target="_blank">Ссылка</a>
                     </td>
-                    <td>{{ subscriber.subscribers }}</td>
+                    <td rowspan="2">{{ subscriber.subscribers }}</td>
+                    <td>{{ subscriber.hashtagPosts|length }}</td>
+                    <td>{{ subscriber.locationPosts|length }}</td>
+                </tr>
+                <tr>
                     <td>
                         <table class="blogger-table">
                             {% for post in subscriber.hashtagPosts %}
-                            <tr>
-                                <td>
-                                    <a href="https://www.instagram.com/p/{{ post.link }}" target="_blank">{{ post.hashtag }}</a> - https://www.instagram.com/p/{{ post.link }}
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        <a href="https://www.instagram.com/p/{{ post.link }}" target="_blank">{{ post.hashtag }}</a> - https://www.instagram.com/p/{{ post.link }}
+                                    </td>
+                                </tr>
                             {% endfor %}
                         </table>
                     </td>
                     <td>
                         <table class="blogger-table">
                             {% for post in subscriber.locationPosts %}
-                            <tr>
-                                <td>
-                                    <a href="https://www.instagram.com/p/{{ post.link }}" target="_blank">{{ post.location.name }}</a> - https://www.instagram.com/p/{{ post.link }}
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        <a href="https://www.instagram.com/p/{{ post.link }}" target="_blank">{{ post.location.name }}</a> - https://www.instagram.com/p/{{ post.link }}
+                                    </td>
+                                </tr>
                             {% endfor %}
 
                         </table>
@@ -59,13 +63,17 @@
             </tr>
             {% for subscriber in facebookSubscribers %}
                 <tr>
-                    <td>{{ subscriber.location }}</td>
-                    <td>{{ subscriber.work }}</td>
-                    <td>{{ subscriber.name }}</td>
-                    <td>
+                    <td rowspan="2">{{ subscriber.location }}</td>
+                    <td rowspan="2">{{ subscriber.work }}</td>
+                    <td rowspan="2">{{ subscriber.name }}</td>
+                    <td rowspan="2">
                         <a href="{{ subscriber.link }}" target="_blank">Ссылка</a>
                     </td>
-                    <td>{{ subscriber.subscribers }}</td>
+                    <td rowspan="2">{{ subscriber.subscribers }}</td>
+                    <td>{{ subscriber.hashtagPosts|length }}</td>
+                    <td>{{ subscriber.locationPosts|length }}</td>
+                </tr>
+                <tr>
                     <td>
                         {% for post in subscriber.hashtagPosts %}
                             <a href="#" target="_blank">{{ post.hashtag }}</a>,
