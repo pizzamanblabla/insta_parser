@@ -2,12 +2,6 @@ parameters:
 
       proxies:
         -
-          ip: '91.243.35.34'
-          port: '6995'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
           ip: '46.232.63.209'
           port: '6859'
           login: 'user3929'
