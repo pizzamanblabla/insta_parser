@@ -49,7 +49,9 @@ services:
             - '@logger'
 
     insta_parser.operation.subscribers.get_info.subscriber.request_assembler:
-        class: InstaParserBundle\Interaction\Assembler\Subscriber\Assembler
+        class: InstaParserBundle\Interaction\Assembler\Subscriber\Proxy
+        arguments:
+            - '%proxies%'
 
     insta_parser.operation.subscribers.get_info.subscriber.data_extractor:
         class: Pizzamanblabla\DataTransformerBundle\DataExtractor\SearchNodes

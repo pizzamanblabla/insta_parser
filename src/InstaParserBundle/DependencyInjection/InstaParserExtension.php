@@ -38,6 +38,7 @@ class InstaParserExtension extends Extension
             'command.yml',
             'controller.yml',
             'services.yml',
+            'parameters.yml',
         ];
     }
 }

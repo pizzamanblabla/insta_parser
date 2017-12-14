@@ -1,0 +1,266 @@
+parameters:
+
+      proxies:
+        -
+          ip: '91.243.32.10'
+          port: '6995'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '91.243.35.34'
+          port: '6995'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.35.230'
+          port: '6995'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '31.44.185.233'
+          port: '9441'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '37.9.48.139'
+          port: '9441'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.42.8'
+          port: '9441'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '37.9.50.188'
+          port: '9441'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.8.62.173'
+          port: '9441'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '46.232.63.209'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '37.9.50.254'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '46.232.61.62'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '46.232.60.126'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '37.9.50.140'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '91.243.35.70'
+          port: '5311'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.34.190'
+          port: '5311'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.35.247'
+          port: '5311'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.35.214'
+          port: '5311'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '37.9.48.2'
+          port: '9441'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '31.44.185.218'
+          port: '9441'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '46.232.62.178'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '46.232.62.229'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '46.232.61.15'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.42.154'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '46.232.63.149'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.8.62.129'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '46.232.60.249'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.41.72'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '46.232.61.88'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.40.242'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.40.86'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '46.232.60.123'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.40.85'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '46.232.62.147'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '46.232.62.127'
+          port: '6859'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '37.9.48.66'
+          port: '8176'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '37.9.48.134'
+          port: '8176'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.40.206'
+          port: '8176'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '31.44.185.251'
+          port: '8176'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.8.62.128'
+          port: '8176'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.41.186'
+          port: '8176'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.40.89'
+          port: '8176'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '37.9.50.241'
+          port: '8176'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '5.188.35.31'
+          port: '5311'
+          login: 'user3929'
+          password: 'tj2foh'
+
+        -
+          ip: '91.243.35.193'
+          port: '5311'
+          login: 'user3929'
+          password: 'tj2foh'
