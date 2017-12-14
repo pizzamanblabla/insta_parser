@@ -47,14 +47,14 @@ final class Proxy implements RequestAssemblerInterface
         return [
             'proxy' => [
                 'http'  => sprintf(
-                    'http://%s:%s@%s:%s',
+                    'tcp://%s:%s@%s:%s',
                     $proxy['login'],
                     $proxy['password'],
                     $proxy['ip'],
                     $proxy['port']
                 ),
                 'https'  => sprintf(
-                    'http://%s:%s@%s:%s',
+                    'tcp://%s:%s@%s:%s',
                     $proxy['login'],
                     $proxy['password'],
                     $proxy['ip'],
