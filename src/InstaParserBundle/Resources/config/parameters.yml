@@ -8,24 +8,6 @@ parameters:
           password: 'tj2foh'
 
         -
-          ip: '5.188.35.230'
-          port: '6995'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
-          ip: '37.9.48.139'
-          port: '9441'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
-          ip: '5.8.62.173'
-          port: '9441'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
           ip: '46.232.63.209'
           port: '6859'
           login: 'user3929'
