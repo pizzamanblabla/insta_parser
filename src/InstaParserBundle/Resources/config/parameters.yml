@@ -2,12 +2,6 @@ parameters:
 
       proxies:
         -
-          ip: '91.243.32.10'
-          port: '6995'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
           ip: '91.243.35.34'
           port: '6995'
           login: 'user3929'
@@ -20,25 +14,7 @@ parameters:
           password: 'tj2foh'
 
         -
-          ip: '31.44.185.233'
-          port: '9441'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
           ip: '37.9.48.139'
-          port: '9441'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
-          ip: '5.188.42.8'
-          port: '9441'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
-          ip: '37.9.50.188'
           port: '9441'
           login: 'user3929'
           password: 'tj2foh'
@@ -100,18 +76,6 @@ parameters:
         -
           ip: '5.188.35.214'
           port: '5311'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
-          ip: '37.9.48.2'
-          port: '9441'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
-          ip: '31.44.185.218'
-          port: '9441'
           login: 'user3929'
           password: 'tj2foh'
 
