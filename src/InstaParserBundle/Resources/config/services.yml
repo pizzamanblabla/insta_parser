@@ -78,6 +78,7 @@ services:
             - '@insta_parser.jms.object_builder'
             - '@insta_parser.operation.statistic.subscriber.update.response_factory'
             - '@validator'
+            - '%proxies%'
             - '@logger'
 
     insta_parser.operation.statistic.subscriber.update.request_assembler:

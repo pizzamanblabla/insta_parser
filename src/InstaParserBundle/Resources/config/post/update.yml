@@ -45,6 +45,7 @@ services:
             - '@insta_parser.jms.object_builder'
             - '@insta_parser.operation.post.update.response_factory'
             - '@validator'
+            - '%proxies%'
             - '@logger'
 
     insta_parser.operation.post.update.request_assembler:

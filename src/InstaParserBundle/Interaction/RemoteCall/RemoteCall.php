@@ -53,12 +53,18 @@ final class RemoteCall implements RemoteCallInterface
     private $validator;
 
     /**
+     * @var array
+     */
+    private $proxies;
+
+    /**
      * @param RequestAssemblerInterface $requestAssembler
      * @param ClientInterface $client
      * @param DataExtractorInterface $dataExtractor
      * @param ObjectBuilderInterface $objectBuilder
      * @param ResponseFactoryInterface $responseFactory
      * @param ValidatorInterface $validator
+     * @param array $proxies
      * @param LoggerInterface $logger
      */
     public function __construct(
@@ -68,6 +74,7 @@ final class RemoteCall implements RemoteCallInterface
         ObjectBuilderInterface $objectBuilder,
         ResponseFactoryInterface $responseFactory,
         ValidatorInterface $validator,
+        array $proxies,
         LoggerInterface $logger
     ) {
         $this->setLogger($logger);
@@ -78,6 +85,7 @@ final class RemoteCall implements RemoteCallInterface
         $this->objectBuilder = $objectBuilder;
         $this->responseFactory = $responseFactory;
         $this->validator = $validator;
+        $this->proxies = $proxies;
     }
 
     /**
@@ -96,7 +104,7 @@ final class RemoteCall implements RemoteCallInterface
 
         //if (!count($extracted)) {
             $this->logger->info('Failed. Sending unmasked remote request');
-            $httpResponse = $this->client->send($httpRequest);
+            $httpResponse = $this->client->send($httpRequest, $this->getProxy());
 
             $this->logger->info('Extracting data from http response');
             $extracted = $this->dataExtractor->extract($httpResponse);
@@ -137,5 +145,32 @@ final class RemoteCall implements RemoteCallInterface
         $stack->push(Middleware::tor());
 
         return new Client(['handler' => $stack]);
+    }
+
+    /**
+     * @return array
+     */
+    private function getProxy()
+    {
+        $proxy = $this->proxies[array_rand($this->proxies)];
+
+        return [
+            'proxy' => [
+                'http'  => sprintf(
+                    'tcp://%s:%s@%s:%s',
+                    $proxy['login'],
+                    $proxy['password'],
+                    $proxy['ip'],
+                    $proxy['port']
+                ),
+                'https'  => sprintf(
+                    'tcp://%s:%s@%s:%s',
+                    $proxy['login'],
+                    $proxy['password'],
+                    $proxy['ip'],
+                    $proxy['port']
+                ),
+            ]
+        ];
     }
 }
