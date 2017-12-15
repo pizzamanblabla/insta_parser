@@ -46,11 +46,18 @@ services:
             - '@insta_parser.jms.object_builder'
             - '@insta_parser.operation.subscribers.get_info.subscriber.response_factory'
             - '@validator'
-            - '%proxies%'
+            - '@insta_parser.request_assembler.option.random_proxy'
             - '@logger'
 
     insta_parser.operation.subscribers.get_info.subscriber.request_assembler:
-        class: InstaParserBundle\Interaction\Assembler\Subscriber\Assembler
+        class: InstaParserBundle\Interaction\Request\Assembler\Assembler
+        arguments:
+            - '@insta_parser.operation.subscribers.get_info.subscriber.assembler.url'
+            - '@insta_parser.request_assembler.header.blank'
+            - 'GET'
+
+    insta_parser.operation.subscribers.get_info.subscriber.assembler.url:
+        class: InstaParserBundle\Operation\Subscriber\Common\Request\Assembler\Url\Assembler
 
     insta_parser.operation.subscribers.get_info.subscriber.data_extractor:
         class: Pizzamanblabla\DataTransformerBundle\DataExtractor\SearchNodes

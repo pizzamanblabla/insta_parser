@@ -9,7 +9,8 @@ use GuzzleHttp\HandlerStack;
 use GuzzleTor\Middleware;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
-use InstaParserBundle\Interaction\RequestAssembler\RequestAssemblerInterface;
+use InstaParserBundle\Interaction\Request\Assembler\Option\OptionAssemblerInterface;
+use InstaParserBundle\Interaction\Request\Assembler\RequestAssemblerInterface;
 use InstaParserBundle\Interaction\Response\ResponseFactoryInterface;
 use InstaParserBundle\Internal\ObjectBuilder\Exception\InvalidObjectException;
 use InstaParserBundle\Internal\ObjectBuilder\ObjectBuilderInterface;
@@ -53,9 +54,9 @@ final class RemoteCall implements RemoteCallInterface
     private $validator;
 
     /**
-     * @var array
+     * @var OptionAssemblerInterface
      */
-    private $proxies;
+    private $optionRequestAssembler;
 
     /**
      * @param RequestAssemblerInterface $requestAssembler
@@ -64,7 +65,7 @@ final class RemoteCall implements RemoteCallInterface
      * @param ObjectBuilderInterface $objectBuilder
      * @param ResponseFactoryInterface $responseFactory
      * @param ValidatorInterface $validator
-     * @param array $proxies
+     * @param OptionAssemblerInterface $optionRequestAssembler
      * @param LoggerInterface $logger
      */
     public function __construct(
@@ -74,7 +75,7 @@ final class RemoteCall implements RemoteCallInterface
         ObjectBuilderInterface $objectBuilder,
         ResponseFactoryInterface $responseFactory,
         ValidatorInterface $validator,
-        array $proxies,
+        OptionAssemblerInterface $optionRequestAssembler,
         LoggerInterface $logger
     ) {
         $this->setLogger($logger);
@@ -85,7 +86,7 @@ final class RemoteCall implements RemoteCallInterface
         $this->objectBuilder = $objectBuilder;
         $this->responseFactory = $responseFactory;
         $this->validator = $validator;
-        $this->proxies = $proxies;
+        $this->optionRequestAssembler = $optionRequestAssembler;
     }
 
     /**
@@ -103,8 +104,8 @@ final class RemoteCall implements RemoteCallInterface
 //        $extracted = $this->dataExtractor->extract($httpResponse);
 
         //if (!count($extracted)) {
-            $this->logger->info('Failed. Sending unmasked remote request');
-            $httpResponse = $this->client->send($httpRequest, $this->getProxy());
+            $this->logger->info('Sending remote request');
+            $httpResponse = $this->client->send($httpRequest, $this->optionRequestAssembler->assemble($request));
 
             $this->logger->info('Extracting data from http response');
             $extracted = $this->dataExtractor->extract($httpResponse);
@@ -145,32 +146,5 @@ final class RemoteCall implements RemoteCallInterface
         $stack->push(Middleware::tor());
 
         return new Client(['handler' => $stack]);
-    }
-
-    /**
-     * @return array
-     */
-    private function getProxy()
-    {
-        $proxy = $this->proxies[array_rand($this->proxies)];
-
-        return [
-            'proxy' => [
-                'http'  => sprintf(
-                    'tcp://%s:%s@%s:%s',
-                    $proxy['login'],
-                    $proxy['password'],
-                    $proxy['ip'],
-                    $proxy['port']
-                ),
-                'https'  => sprintf(
-                    'tcp://%s:%s@%s:%s',
-                    $proxy['login'],
-                    $proxy['password'],
-                    $proxy['ip'],
-                    $proxy['port']
-                ),
-            ]
-        ];
     }
 }

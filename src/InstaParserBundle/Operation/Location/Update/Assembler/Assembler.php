@@ -4,7 +4,7 @@ namespace InstaParserBundle\Operation\Location\Update\Assembler;
 
 use GuzzleHttp\Psr7\Request;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
-use InstaParserBundle\Interaction\RequestAssembler\BaseAssembler;
+use InstaParserBundle\Interaction\Request\Assembler\BaseAssembler;
 use InstaParserBundle\Operation\Location\Update\Dto\Request as InternalRequest;
 use Psr\Http\Message\RequestInterface;
 

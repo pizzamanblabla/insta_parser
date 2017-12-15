@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Interaction\RequestAssembler;
+namespace InstaParserBundle\Interaction\Request\Assembler;
 
 abstract class BaseAssembler implements RequestAssemblerInterface
 {
