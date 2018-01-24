@@ -2,18 +2,6 @@ parameters:
 
       proxies:
         -
-          ip: '46.232.63.209'
-          port: '6859'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
-          ip: '37.9.50.254'
-          port: '6859'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
           ip: '46.232.61.62'
           port: '6859'
           login: 'user3929'
@@ -98,18 +86,6 @@ parameters:
           password: 'tj2foh'
 
         -
-          ip: '5.188.41.72'
-          port: '6859'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
-          ip: '46.232.61.88'
-          port: '6859'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
           ip: '5.188.40.242'
           port: '6859'
           login: 'user3929'
@@ -117,12 +93,6 @@ parameters:
 
         -
           ip: '5.188.40.86'
-          port: '6859'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
-          ip: '46.232.60.123'
           port: '6859'
           login: 'user3929'
           password: 'tj2foh'
@@ -146,19 +116,7 @@ parameters:
           password: 'tj2foh'
 
         -
-          ip: '37.9.48.66'
-          port: '8176'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
           ip: '37.9.48.134'
-          port: '8176'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
-          ip: '5.188.40.206'
           port: '8176'
           login: 'user3929'
           password: 'tj2foh'
@@ -171,18 +129,6 @@ parameters:
 
         -
           ip: '5.8.62.128'
-          port: '8176'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
-          ip: '5.188.41.186'
-          port: '8176'
-          login: 'user3929'
-          password: 'tj2foh'
-
-        -
-          ip: '5.188.40.89'
           port: '8176'
           login: 'user3929'
           password: 'tj2foh'

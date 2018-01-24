@@ -36,6 +36,7 @@ final class Assembler implements RequestAssemblerInterface
         string $method
     ) {
         $this->urlAssembler = $urlAssembler;
+        $this->headerAssembler = $headerAssembler;
         $this->method = $method;
     }
 
