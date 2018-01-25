@@ -40,6 +40,13 @@ class Tag
     private $subscribers = [];
 
     /**
+     * @var string[]
+     *
+     * @ORM\Column(type="jsonb", name="proxies", nullable=false)
+     */
+    private $proxies = [];
+
+    /**
      * @return int
      */
     public function getId()
@@ -90,6 +97,24 @@ class Tag
     public function setSubscribers($subscribers)
     {
         $this->subscribers = $subscribers;
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getProxies()
+    {
+        return $this->proxies;
+    }
+
+    /**
+     * @param string[] $proxies
+     * @return Tag
+     */
+    public function setProxies(array $proxies)
+    {
+        $this->proxies = $proxies;
         return $this;
     }
 }

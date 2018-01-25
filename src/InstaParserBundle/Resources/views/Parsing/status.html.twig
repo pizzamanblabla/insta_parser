@@ -1,0 +1,17 @@
+{% extends 'InstaParserBundle:Common:base.html.twig' %}
+{% block content %}
+    <div class="bloggers">
+    <table id="blogger-table" class="blogger-table">
+        <tr class="table-head">
+            <td>Дата</td>
+            <td>Ход выполнения</td>
+            <td>Скачать Emails</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><a href="{{ path('controller.api.parsing.download') }}?tag="></a></td>
+        </tr>
+    </table>
+    </div>
+{% endblock %}

@@ -32,6 +32,8 @@ RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php/7.0/fpm/php.ini 
     && echo "daemon off;" >> /etc/nginx/nginx.conf \
     && sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/7.0/fpm/php-fpm.conf \
     && sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini \
+    && sed -i "s/upload_max_filesize = \dM/upload_max_filesize = \dM/" /etc/php/7.0/fpm/php.ini \
+    && sed -i "s/post_max_size = \dM/post_max_size = 200M/" /etc/php/7.0/fpm/php.ini \
     && sed -i -e "s/#\sserver_names_hash_bucket_size\s64;/server_names_hash_bucket_size 128;/g" /etc/nginx/nginx.conf \
     && mkdir -p /var/www /etc/my_init.d /etc/service/nginx /etc/service/phpfpm /data/config /run/php
 

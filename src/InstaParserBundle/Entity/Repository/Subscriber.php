@@ -31,6 +31,25 @@ final class Subscriber extends EntityRepository
     }
 
     /**
+     * @param Entity\Tag $tag
+     * @return Entity\Subscriber[]
+     */
+    public function findAllByTag(Entity\Tag $tag)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+
+        $queryBuilder
+            ->select('s.email')
+            ->join('s.tags', 't')
+            ->andWhere('s.email is NOT NULL')
+            ->andWhere($queryBuilder->expr()->eq('t.id', $tag->getId()))
+            ->orderBy('s.updatedAt', 'ASC')
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
      * @param int $limit
      * @return Entity\Subscriber[]
      */

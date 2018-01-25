@@ -1,0 +1,27 @@
+.upload-block {
+  width: 600px;
+  margin: auto;
+
+  p {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  textarea, input[type="file"] {
+    width: 100%;
+  }
+
+  textarea {
+    height: 300px;
+  }
+
+  label {
+    margin-top: 20px;
+    display: block;
+  }
+
+  button {
+    width: 200px;
+    height: 40px;
+  }
+}

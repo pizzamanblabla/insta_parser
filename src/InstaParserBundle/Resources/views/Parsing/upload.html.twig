@@ -1,0 +1,16 @@
+{% extends 'InstaParserBundle:Common:base.html.twig' %}
+{% block content %}
+    <div>
+        <div class="upload-block">
+            <p>Загрузить блоггеров</p>
+            <form method="POST" class="upload-form" enctype="multipart/form-data" action="{{ path('controller.api.parsing.upload') }}">
+                <label for="proxies">Bloggers:</label>
+                <input name="subscribers" type="file">
+                <label for="proxies">Proxies:</label>
+                <textarea id="proxies" name="proxies"></textarea>
+
+                <button type="submit" value="Submit">Парсить</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
