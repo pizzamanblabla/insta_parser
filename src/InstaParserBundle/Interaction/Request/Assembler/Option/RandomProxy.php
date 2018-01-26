@@ -2,7 +2,9 @@
 
 namespace InstaParserBundle\Interaction\Request\Assembler\Option;
 
+use InstaParserBundle\Entity\Tag;
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
+use InstaParserBundle\Interaction\Dto\Request\SubscriberRequest;
 
 final class RandomProxy implements OptionAssemblerInterface
 {
@@ -24,25 +26,38 @@ final class RandomProxy implements OptionAssemblerInterface
      */
     public function assemble(InternalRequestInterface $request): array
     {
-        $proxy = $this->proxies[array_rand($this->proxies)];
+        /** @var SubscriberRequest $request  */
+        $tags = $request->getSubscriber()->getTags();
+        $response = [];
 
-        return [
-            'proxy' => [
-                'http'  => sprintf(
-                    'tcp://%s:%s@%s:%s',
-                    $proxy['login'],
-                    $proxy['password'],
-                    $proxy['ip'],
-                    $proxy['port']
-                ),
-                'https'  => sprintf(
-                    'tcp://%s:%s@%s:%s',
-                    $proxy['login'],
-                    $proxy['password'],
-                    $proxy['ip'],
-                    $proxy['port']
-                ),
-            ]
-        ];
+        if (count($tags) > 0) {
+            $tag = $tags[0];
+            /** @var Tag $tag  */
+            $proxies = $tag->getProxies();
+            if (count($proxies) > 0) {
+                $proxy = $proxies[array_rand($proxies)];
+
+                $response = [
+                    'proxy' => [
+                        'http'  => sprintf(
+                            'tcp://%s:%s@%s:%s',
+                            $proxy['login'],
+                            $proxy['password'],
+                            $proxy['ip'],
+                            $proxy['port']
+                        ),
+                        'https'  => sprintf(
+                            'tcp://%s:%s@%s:%s',
+                            $proxy['login'],
+                            $proxy['password'],
+                            $proxy['ip'],
+                            $proxy['port']
+                        ),
+                    ]
+                ];
+            }
+        }
+
+        return $response;
     }
 }

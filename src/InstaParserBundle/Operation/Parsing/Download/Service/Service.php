@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Operation\Parsing\Download\Dto\Service;
+namespace InstaParserBundle\Operation\Parsing\Download\Service;
 
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use InstaParserBundle\Interaction\Dto\Response\InternalResponseInterface;
@@ -17,7 +17,9 @@ final class Service extends BaseEntityService
     public function behave(InternalRequestInterface $request): InternalResponseInterface
     {
         return (new SuccessfulResponse())->setEmails(
-            $this->repositoryFactory->subscriber()->findAllByTag($request->getTag())
+            array_map(function($array) {
+                return $array['email'];
+            },$this->repositoryFactory->subscriber()->findAllByTag($request->getTag()))
         );
     }
 }

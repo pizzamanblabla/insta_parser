@@ -39,11 +39,64 @@ final class Subscriber extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('s');
 
         $queryBuilder
-            ->select('s.email')
+            ->select('s.email as email')
             ->join('s.tags', 't')
-            ->andWhere('s.email is NOT NULL')
+            ->andWhere('s.email <> \'\'')
             ->andWhere($queryBuilder->expr()->eq('t.id', $tag->getId()))
             ->orderBy('s.updatedAt', 'ASC')
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param Entity\Tag $tag
+     * @return Entity\Subscriber[]
+     */
+    public function findAllCountByTag(Entity\Tag $tag)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+
+        $queryBuilder
+            ->select('count(s.id) as quantity')
+            ->join('s.tags', 't')
+            ->where($queryBuilder->expr()->eq('t.id', $tag->getId()))
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param Entity\Tag $tag
+     * @return Entity\Subscriber[]
+     */
+    public function findAllCountWithEmailByTag(Entity\Tag $tag)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+
+        $queryBuilder
+            ->select('count(s.id) as quantity')
+            ->join('s.tags', 't')
+            ->where('s.email <> \'\'')
+            ->andWhere($queryBuilder->expr()->eq('t.id', $tag->getId()))
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param Entity\Tag $tag
+     * @return Entity\Subscriber[]
+     */
+    public function findAllCountWithWorkedByTag(Entity\Tag $tag)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+
+        $queryBuilder
+            ->select('count(s.id) as quantity')
+            ->join('s.tags', 't')
+            ->where('s.subscribers is NOT NULL')
+            ->andWhere($queryBuilder->expr()->eq('t.id', $tag->getId()))
         ;
 
         return $queryBuilder->getQuery()->getResult();

@@ -2,9 +2,12 @@
 
 namespace InstaParserBundle\Controller;
 
+use InstaParserBundle\Entity\Repository\FactoryInterface;
 use InstaParserBundle\Entity\Tag;
 use InstaParserBundle\Internal\Service\ServiceInterface;
+use InstaParserBundle\Operation\Parsing\Download\Dto\Response\SuccessfulResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use InstaParserBundle\Operation\Parsing\Download\Dto\Request\Request as DownloadRequest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,10 +19,17 @@ final class ApiController extends Controller
     private $downloadService;
 
     /**
-     * @param ServiceInterface $downloadService
+     * @var FactoryInterface
      */
-    public function __construct(ServiceInterface $downloadService) {
+    private $repositoryFactory;
+
+    /**
+     * @param ServiceInterface $downloadService
+     * @param FactoryInterface $repositoryFactory
+     */
+    public function __construct(ServiceInterface $downloadService, FactoryInterface $repositoryFactory) {
         $this->downloadService = $downloadService;
+        $this->repositoryFactory = $repositoryFactory;
     }
 
     /**
@@ -56,9 +66,15 @@ final class ApiController extends Controller
      */
     public function downloadAction($tagId)
     {
-        $pdfPath = $this->getParameter('dir.downloads').'/sample.pdf';
+        $tag = $this->repositoryFactory->tag()->find($tagId);
+        /** @var Tag $tag */
+        $response = $this->downloadService->behave((new DownloadRequest())->setTag($tag));
+        /** @var SuccessfulResponse $response */
+        mkdir('/tmp/download');
+        $filename = '/tmp/download/' . $tag->getId();
+        file_put_contents($filename, implode(PHP_EOL, $response->getEmails()));
 
-        return $this->file($pdfPath);
+        return $this->file($filename);
     }
 
     /**

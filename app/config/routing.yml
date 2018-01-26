@@ -39,6 +39,6 @@ controller.api.parsing.upload:
     methods: [POST]
 
 controller.api.parsing.download:
-    path: '/api/v1/parsing/download'
+    path: '/api/v1/parsing/download/{tagId}'
     defaults: { _controller: insta_parser.controller.api:downloadAction, security: false }
     methods: [GET]

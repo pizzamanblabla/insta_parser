@@ -31,6 +31,7 @@ class InstaParserExtension extends Extension
     {
         return [
             'location/update.yml',
+            'parsing/download.yml',
             'post/update.yml',
             'statistic/parameters.yml',
             'subscriber/get_info.yml',

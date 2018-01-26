@@ -36,13 +36,19 @@ final class ParsingController extends Controller
      */
     public function getResultsAction(Request $request)
     {
+        $tagsData = [];
+        $tags = $this->repositoryFactory->tag()->findAll();
 
-        return
-            $this->render(
-                'InstaParserBundle:Parsing:status.html.twig',
-                [
-                    'pageType' => 'brand',
-                ]
-            );
+        foreach ($tags as $tag) {
+            $tagsData[] = [
+                'tag' => $tag->getId(),
+                'type' => $tag->getType(),
+                'count' => $this->repositoryFactory->subscriber()->findAllCountByTag($tag)[0]['quantity'],
+                'worked' => $this->repositoryFactory->subscriber()->findAllCountWithWorkedByTag($tag)[0]['quantity'],
+                'emails' => $this->repositoryFactory->subscriber()->findAllCountWithEmailByTag($tag)[0]['quantity'],
+            ];
+        }
+
+        return $this->render('InstaParserBundle:Parsing:status.html.twig', ['tagsData' => $tagsData]);
     }
 }

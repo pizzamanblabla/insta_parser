@@ -4,14 +4,20 @@
     <table id="blogger-table" class="blogger-table">
         <tr class="table-head">
             <td>Дата</td>
-            <td>Ход выполнения</td>
             <td>Скачать Emails</td>
+            <td>Всего блоггеров</td>
+            <td>Обработано блоггеров</td>
+            <td>Собрано эмейлов</td>
         </tr>
+    {% for data in tagsData %}
         <tr>
-            <td></td>
-            <td></td>
-            <td><a href="{{ path('controller.api.parsing.download') }}?tag="></a></td>
+            <td>{{ data.type }}</td>
+            <td><a href="{{ path('controller.api.parsing.download', { 'tagId': data.tag }) }}">Скачать</a></td>
+            <td>{{ data.count }}</td>
+            <td>{{ data.worked }}</td>
+            <td>{{ data.emails }}</td>
         </tr>
+    {% endfor %}
     </table>
     </div>
 {% endblock %}
