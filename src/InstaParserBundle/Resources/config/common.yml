@@ -16,6 +16,18 @@ services:
             - '@jms_serializer'
             - '@logger'
 
+    #Request Assembler
+    insta_parser.request_assembler.header.blank:
+        class: InstaParserBundle\Interaction\Request\Assembler\Header\Blank
+
+    insta_parser.request_assembler.option.blank:
+        class: InstaParserBundle\Interaction\Request\Assembler\Option\Blank
+
+    insta_parser.request_assembler.option.random_proxy:
+        class: InstaParserBundle\Interaction\Request\Assembler\Option\RandomProxy
+        arguments:
+            - '%proxies%'
+
     #Data Extractors
     insta_parser.common.data_extractor.http_response_to_array:
         class: InstaParserBundle\DataExtractor\Response\Content

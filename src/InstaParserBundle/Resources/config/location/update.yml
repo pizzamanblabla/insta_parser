@@ -38,7 +38,7 @@ services:
             - '@insta_parser.jms.object_builder'
             - '@insta_parser.operation.location.update.response_factory'
             - '@validator'
-            - '%proxies%'
+            - '@insta_parser.request_assembler.option.random_proxy'
             - '@logger'
 
     insta_parser.operation.location.update.request_assembler:

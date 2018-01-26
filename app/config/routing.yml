@@ -22,3 +22,23 @@ controller.statistic.hashtags:
     path: '/hashtags'
     defaults: { _controller: insta_parser.controller.statistic.mentions:getHashtagAction, security: false }
     methods: [GET]
+
+controller.parsing.results:
+    path: '/results'
+    defaults: { _controller: insta_parser.controller.parsing:getResultsAction, security: false }
+    methods: [GET]
+
+controller.parsing.upload:
+    path: '/upload'
+    defaults: { _controller: insta_parser.controller.parsing:getUploadAction, security: false }
+    methods: [GET]
+
+controller.api.parsing.upload:
+    path: '/api/v1/parsing/upload'
+    defaults: { _controller: insta_parser.controller.api:uploadAction, security: false }
+    methods: [POST]
+
+controller.api.parsing.download:
+    path: '/api/v1/parsing/download/{tagId}'
+    defaults: { _controller: insta_parser.controller.api:downloadAction, security: false }
+    methods: [GET]

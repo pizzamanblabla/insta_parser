@@ -6,3 +6,14 @@ services:
             - '@insta_parser.operation.statistic.get.brands.service'
             - '@insta_parser.operation.statistic.get.top.service'
             - '@insta_parser.operation.statistic.get.hashtag.service'
+
+    insta_parser.controller.parsing:
+        class: InstaParserBundle\Controller\ParsingController
+        arguments:
+            - '@insta_parser.repository_factory'
+
+    insta_parser.controller.api:
+        class: InstaParserBundle\Controller\ApiController
+        arguments:
+            - '@insta_parser.operation.parsing.download.service'
+            - '@insta_parser.repository_factory'

@@ -1,6 +1,6 @@
 <?php
 
-namespace InstaParserBundle\Interaction\RequestAssembler;
+namespace InstaParserBundle\Interaction\Request\Assembler;
 
 use InstaParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use Psr\Http\Message\RequestInterface;

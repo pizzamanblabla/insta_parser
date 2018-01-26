@@ -1,1 +1,2 @@
-5 * * * * www-data ./bin/console mention:update >> /var/www/var/logs/dev.log
+* * * * * www-data ./bin/console subscriber:get_info >> /var/www/var/logs/dev.log
+* * * * * www-data ./web/tmp/load_subs.php >> /var/www/var/logs/dev.log

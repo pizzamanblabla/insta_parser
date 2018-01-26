@@ -1,0 +1,7 @@
+services:
+    insta_parser.operation.parsing.download.service:
+        class: InstaParserBundle\Operation\Parsing\Download\Service\Service
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@insta_parser.repository_factory'
+            - '@logger'
