@@ -18,8 +18,8 @@ final class Service extends BaseEntityService
     {
         return (new SuccessfulResponse())->setEmails(
             array_map(function($array) {
-                return $array['email'];
-            },$this->repositoryFactory->subscriber()->findAllByTag($request->getTag()))
+                return $array['email'] . ',' . $array['subscribers'];
+            }, $this->repositoryFactory->subscriber()->findAllByTag($request->getTag()))
         );
     }
 }

@@ -39,10 +39,11 @@ final class Subscriber extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('s');
 
         $queryBuilder
-            ->select('s.email as email')
-            ->join('s.tags', 't')
+            ->select('s.email as email, s.subscribers as subscribers')
+            ->leftJoin('s.tags', 't')
             ->andWhere('s.email <> \'\'')
             ->andWhere($queryBuilder->expr()->eq('t.id', $tag->getId()))
+            ->groupBy('s.id')
             ->orderBy('s.updatedAt', 'ASC')
         ;
 
